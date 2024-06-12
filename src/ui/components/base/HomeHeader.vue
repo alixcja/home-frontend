@@ -1,7 +1,6 @@
 <template>
   <v-app-bar class="header" color="#1e1c1b" :elevation="2">
     <img src="@/assets/exp-home-logo.svg" class="logo" />
-    <v-icon icon="mdi-cancel"></v-icon>
   </v-app-bar>
 </template>
 <script setup></script>
