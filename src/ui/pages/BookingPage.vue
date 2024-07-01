@@ -26,7 +26,7 @@
 </template>
 <script setup lang="ts">
 import SplitEntites from "../components/booking/SplitEntites.vue";
-import { useEntityStore } from "../../data/store/EntityStore";
+import { useEntityStore } from "../../data/store/entity/EntityStore";
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import EntityCard from "../components/booking/EntityCard.vue";

@@ -3,7 +3,7 @@
     <img src="@/assets/exp-home-logo.svg" class="logo" />
   </v-app-bar>
 </template>
-<script setup></script>
+<script setup lang="ts"></script>
 <style scoped lang="scss">
 .header {
   width: 100vw;
