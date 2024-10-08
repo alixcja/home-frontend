@@ -1,8 +1,2 @@
-export interface Console {
-    id: number,
-    name: string,
-    description: string,
-    type: string,
-    isArchived: boolean,
-    addedOn: Date
+export interface Console extends Entity {
 }

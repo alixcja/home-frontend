@@ -1,7 +1,7 @@
 <template>
   <div class="splitter">
     <v-icon icon="mdi-chevron-up" class="mr-2"></v-icon>
-    <p >{{ props.entity }}</p>
+    <p class="text-h5">{{ props.entity }}</p>
     <hr class="w-100 ml-4"/>
   </div>
 </template>

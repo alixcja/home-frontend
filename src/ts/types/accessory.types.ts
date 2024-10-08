@@ -1,9 +1,3 @@
-export interface Accessory {
-    id: number,
-    name: string,
-    description: string,
-    type: string,
-    isArchived: boolean,
-    addedOn: Date,
+export interface Accessory extends Entity {
     consoleType: string
 }

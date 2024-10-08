@@ -14,17 +14,17 @@ export const useEntityStore = defineStore("entity", {
       this.getAllConsolesAccessory();
     },
     getAllGames() {
-      axios.get("http://localhost:8900/game/all").then((response) => {
+      axios.get("http://localhost:8000/games").then((response) => {
         this.allGames = response.data;
       });
     },
     getAllConsoles() {
-      axios.get("http://localhost:8900/console/all").then((response) => {
+      axios.get("http://localhost:8000/consoles").then((response) => {
         this.allConsoles = response.data;
       });
     },
     getAllConsolesAccessory() {
-      axios.get("http://localhost:8900/accessory/all").then((response) => {
+      axios.get("http://localhost:8000/accessories").then((response) => {
         this.allConsoleAccessories = response.data;
       });
     },

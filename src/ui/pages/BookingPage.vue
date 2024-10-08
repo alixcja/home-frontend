@@ -1,24 +1,24 @@
 <template>
   <div class="d-flex flex-row">
-    <h2 class="header">Buchung</h2>
+    <h1 class="header">Buchung</h1>
     <v-spacer />
     <v-btn color="#FF8200">Rückgabe</v-btn>
   </div>
   <SplitEntites entity="Favoriten" />
   <SplitEntites entity="Spiele" />
-  <div class="d-flex flex-row">
-    <div v-for="game in allGames" :key="game.id">
+  <div class="d-flex flex-row ma-8">
+    <div v-for="game in allGames">
       <EntityCard :entity="game"></EntityCard>
     </div>
-  </div>
+  </div> 
   <SplitEntites entity="Konsolen" />
-  <div class="d-flex flex-row">
-    <div v-for="console in allConsoles" :key="console.id">
+  <div class="d-flex flex-row ma-8">
+    <div v-for="console in allConsoles">
       <EntityCard :entity="console"></EntityCard>
     </div>
   </div>
   <SplitEntites entity="Konsolen-Zubehör" />
-  <div class="d-flex flex-row">
+  <div class="d-flex flex-row ma-8">
     <div v-for="accessory in allConsoleAccessories">
       <EntityCard :entity="accessory"></EntityCard>
     </div>
@@ -30,6 +30,9 @@ import { useEntityStore } from "../../data/store/entity/EntityStore";
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import EntityCard from "../components/booking/EntityCard.vue";
+import { Entity } from "../../ts/types/entity.types";
+
+const selectedForBooking: Entity[] = [];
 
 const { allGames, allConsoles, allConsoleAccessories } =
   storeToRefs(useEntityStore());
@@ -42,7 +45,7 @@ onMounted(() => {
 <style>
 .header {
   color: #1e1c1b;
-  font-size: 28px;
+  font-size: 32;
   font-weight: 700;
 }
 

@@ -1,9 +1,4 @@
-export interface Game {
-    id: number;
-    name: string;
-    description: string,
-    type: string,
-    isArchived: boolean,
-    addedOn: Date,
+export interface Game extends Entity {
+
     consoleType: string
   }
