@@ -5,7 +5,7 @@
         <v-icon color="white"> mdi-check </v-icon>
       </div>
     </div>
-    <v-card class="elevation-24 rounded-xl card">
+    <v-card  @click="$emit('handleSelection')" class="elevation-24 rounded-xl card">
       <v-img
         width="100%"
         src="https://www.movasis.com/wp-content/uploads/2017/01/image-placeholder-500x500.jpg"
@@ -26,6 +26,7 @@
 </template>
 <script setup lang="ts">
 const props = defineProps(["entity"]);
+
 </script>
 <style>
 .selected {

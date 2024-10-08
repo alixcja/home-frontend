@@ -8,19 +8,19 @@
   <SplitEntites entity="Spiele" />
   <div class="d-flex flex-row ma-8">
     <div v-for="game in allGames">
-      <EntityCard :entity="game"></EntityCard>
+      <EntityCard :entity="game" @handle-selection="handleSelectionForEntity(game)"></EntityCard>
     </div>
   </div> 
   <SplitEntites entity="Konsolen" />
   <div class="d-flex flex-row ma-8">
     <div v-for="console in allConsoles">
-      <EntityCard :entity="console"></EntityCard>
+      <EntityCard :entity="console" @handle-selection="handleSelectionForEntity(console)"></EntityCard>
     </div>
   </div>
   <SplitEntites entity="Konsolen-Zubehör" />
   <div class="d-flex flex-row ma-8">
     <div v-for="accessory in allConsoleAccessories">
-      <EntityCard :entity="accessory"></EntityCard>
+      <EntityCard :entity="accessory" @handle-selection="handleSelectionForEntity(accessory)"></EntityCard>
     </div>
   </div>
 </template>
@@ -32,7 +32,7 @@ import { storeToRefs } from "pinia";
 import EntityCard from "../components/booking/EntityCard.vue";
 import { Entity } from "../../ts/types/entity.types";
 
-const selectedForBooking: Entity[] = [];
+let selectedForBooking: number[] = [];
 
 const { allGames, allConsoles, allConsoleAccessories } =
   storeToRefs(useEntityStore());
@@ -41,6 +41,16 @@ onMounted(() => {
   useEntityStore().getAllEntites();
   console.log(allConsoles.value);
 });
+
+function handleSelectionForEntity(entity: Entity) {
+  console.log("Before: " + selectedForBooking)
+  if (selectedForBooking.includes(entity.id)) {
+    selectedForBooking = selectedForBooking.filter(id => id != entity.id)
+  } else {
+    selectedForBooking.push(entity.id)
+  }
+  console.log("After: " + selectedForBooking)
+}
 </script>
 <style>
 .header {
