@@ -1,11 +1,15 @@
 <template>
   <div class="mr-4">
-    <div class="icon-position">
+    <div class="icon-position" v-if="isSelected">
       <div class="circle right d-flex justify-center align-center">
         <v-icon color="white"> mdi-check </v-icon>
       </div>
     </div>
-    <v-card  @click="$emit('handleSelection')" class="elevation-24 rounded-xl card">
+    <v-card
+      @click="$emit('handleSelection')"
+      :class="{ selected: isSelected }"
+      class="elevation-24 rounded-xl card"
+    >
       <v-img
         width="100%"
         src="https://www.movasis.com/wp-content/uploads/2017/01/image-placeholder-500x500.jpg"
@@ -25,8 +29,12 @@
   </div>
 </template>
 <script setup lang="ts">
-const props = defineProps(["entity"]);
+const props = defineProps(["entity", "selectedEntities"]);
+import { computed } from 'vue'
 
+const isSelected = computed(() =>
+  props.selectedEntities.includes(props.entity.id)
+)
 </script>
 <style>
 .selected {
@@ -43,12 +51,12 @@ const props = defineProps(["entity"]);
   display: flex;
   justify-content: end;
   position: relative;
-  top: 20px;
   left: 15px;
   z-index: 10;
 }
 .card {
   width: 10vw;
   height: 32vh;
+  position:relative;
 }
 </style>
