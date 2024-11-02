@@ -1,8 +1,17 @@
 <template>
-  <div class="book-button-background-active rounded-lg postition-fixed">
+  <v-expand-x-transition>
+    <div
+      v-show="isAnyEntitySelected"
+      class="book-button-background-active rounded-s-lg postition-fixed"
+    >
+      <v-btn class="book-button">Buchen</v-btn>
+    </div>
+  </v-expand-x-transition>
+  <!--  <div :class="[isAnyEntitySelected ? 'book-button-background-active' : 'book-button-background-inactive']" 
+  class=" rounded-s-lg postition-fixed">
     <v-btn class="book-button">Buchen</v-btn>
-  </div>
-  <div class="position-relative overflow-y-auto">
+  </div> -->
+  <div class="position-relative overflow-y-auto ma-6">
     <div class="d-flex flex-row">
       <h1 class="header">Buchung</h1>
       <v-spacer />
@@ -131,17 +140,17 @@ function toggleView(entity: string) {
   background-color: #ff8200 !important;
   width: 40%;
   height: 30%;
+  margin-left: 16px
 }
 
 .book-button-background-active {
   position: sticky;
   z-index: 10;
-  width: 20%;
+  width: 15%;
   height: 5%;
   background-color: #1e1c1b;
-  padding-left: 16px;
-  padding-right: 0px !important;
   left: 100%;
   top: 90%;
 }
+
 </style>
