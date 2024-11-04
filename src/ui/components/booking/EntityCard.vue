@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-4">
+  <div class="card-position">
     <div class="icon-position" v-if="isSelected">
       <div class="circle right d-flex justify-center align-center">
         <v-icon color="white"> mdi-check </v-icon>
@@ -30,13 +30,18 @@
 </template>
 <script setup lang="ts">
 const props = defineProps(["entity", "selectedEntities"]);
-import { computed } from 'vue'
+import { computed } from "vue";
+import { Entity } from "../../../ts/types/entity.types";
 
 const isSelected = computed(() =>
-  props.selectedEntities.includes(props.entity.id)
-)
+  props.selectedEntities.some((entity: Entity) => entity.id === props.entity.id)
+);
 </script>
 <style>
+.card-position {
+  margin-right: 40px;
+  height: 15%;
+}
 .selected {
   border-width: 0.25vw !important;
   border-color: #ff8200 !important;
@@ -48,15 +53,15 @@ const isSelected = computed(() =>
   background-color: #ff8200;
 }
 .icon-position {
-  display: flex;
   justify-content: end;
   position: relative;
-  left: 15px;
+  top: 24px;
+  left: 90%;
   z-index: 10;
 }
 .card {
   width: 10vw;
   height: 32vh;
-  position:relative;
+  position: relative;
 }
 </style>

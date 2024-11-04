@@ -4,13 +4,9 @@
       v-show="isAnyEntitySelected"
       class="book-button-background-active rounded-s-lg postition-fixed"
     >
-      <v-btn class="book-button">Buchen</v-btn>
+      <v-btn class="book-button" @click="toggleBookingModule()">Buchen</v-btn>
     </div>
   </v-expand-x-transition>
-  <!--  <div :class="[isAnyEntitySelected ? 'book-button-background-active' : 'book-button-background-inactive']" 
-  class=" rounded-s-lg postition-fixed">
-    <v-btn class="book-button">Buchen</v-btn>
-  </div> -->
   <div class="position-relative overflow-y-auto ma-6">
     <div class="d-flex flex-row">
       <h1 class="header">Buchung</h1>
@@ -69,12 +65,14 @@
 <script setup lang="ts">
 import SplitEntites from "../components/booking/SplitEntites.vue";
 import { useEntityStore } from "../../data/store/entity/EntityStore";
+import { useBookingStore } from "../../data/store/BookingStore";
 import { onMounted, computed, ref, Ref } from "vue";
 import { storeToRefs } from "pinia";
 import EntityCard from "../components/booking/EntityCard.vue";
 import { Entity } from "../../ts/types/entity.types";
+import { de } from "vuetify/locale";
 
-let selectedForBooking: Ref<number[]> = ref([]);
+let selectedForBooking: Ref<Entity[]> = ref([]);
 let toggleFavorites = ref(false);
 let toggleGames = ref(true);
 let toggleConsoles = ref(true);
@@ -82,6 +80,7 @@ let toggleAccessories = ref(true);
 
 const { allGames, allConsoles, allConsoleAccessories } =
   storeToRefs(useEntityStore());
+const bookingStore = useBookingStore();
 
 onMounted(() => {
   useEntityStore().getAllEntites();
@@ -91,14 +90,23 @@ const isAnyEntitySelected = computed(() => {
   return selectedForBooking.value.length > 0;
 });
 
-function handleSelectionForEntity(entity: Entity) {
-  if (selectedForBooking.value.includes(entity.id)) {
+function handleSelectionForEntity(selectedEntity: Entity) {
+  const exists = selectedForBooking.value.some(
+    (entity) => entity.id === selectedEntity.id
+  );
+
+  if (exists) {
     selectedForBooking.value = selectedForBooking.value.filter(
-      (id) => id != entity.id
+      (entity) => entity.id !== selectedEntity.id
     );
   } else {
-    selectedForBooking.value.push(entity.id);
+    selectedForBooking.value.push(selectedEntity);
   }
+}
+
+function toggleBookingModule() {
+  bookingStore.setEntitesForBooking(selectedForBooking.value);
+  bookingStore.triggerBookingModule();
 }
 
 function toggleView(entity: string) {
@@ -117,7 +125,7 @@ function toggleView(entity: string) {
   }
 }
 </script>
-<style>
+<style scoped>
 .header {
   color: #1e1c1b;
   font-size: 32;
@@ -140,7 +148,7 @@ function toggleView(entity: string) {
   background-color: #ff8200 !important;
   width: 40%;
   height: 30%;
-  margin-left: 16px
+  margin-left: 16px;
 }
 
 .book-button-background-active {
@@ -152,5 +160,4 @@ function toggleView(entity: string) {
   left: 100%;
   top: 90%;
 }
-
 </style>
