@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
-    "axios": "^1.7.2",
-    "pinia": "^2.1.7",
-    "vue": "^3.4.21",
-    "vuetify": "^3.6.3"
+    "axios": "^1.7.7",
+    "pinia": "^2.2.6",
+    "vue": "^3.5.12",
+    "vuetify": "^3.7.3"
   },
   "devDependencies": {
     "@mdi/font": "^7.4.47",
