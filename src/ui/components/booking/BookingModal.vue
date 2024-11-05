@@ -2,41 +2,46 @@
   <v-card class="card">
     <p class="title">Buchung</p>
     <hr class="divider" />
-    <v-date-input
-        v-model="model"
-      ></v-date-input>
-    <div v-for="entity in selectedEntitiesForBooking">
-      <div class="d-flex flex-row justify-start">
-        <div class="ma-8">
-          <v-img
-            width="200px"
-            height="200px"
-            src="https://www.movasis.com/wp-content/uploads/2017/01/image-placeholder-500x500.jpg"
-          ></v-img>
-        </div>
-        <div class="d-flex flex-column ml-4 justify-center">
-          <p class="entity-title">{{ entity.name }}</p>
-          <div class="d-flex flex-row">
-            <p class="entity-text">{{ getType(entity.type) }}</p>
-            <p class="entity-text" v-if="entity.consoleType">
-              - {{ entity.consoleType }}
-            </p>
+    <div class="overflow-y-auto">
+      <div v-for="entity in selectedEntitiesForBooking">
+        <div class="d-flex flex-row justify-start">
+          <div class="ma-8">
+            <v-img
+              width="200px"
+              height="200px"
+              src="https://www.movasis.com/wp-content/uploads/2017/01/image-placeholder-500x500.jpg"
+            ></v-img>
           </div>
-          <div class="d-flex flex-row">
-            <v-icon
-              icon="mdi-information"
-              class="info-icon"
-              color="#c2b5ad"
-            ></v-icon>
-            <p class="entity-text">Max. Ausleihdauer: Sieben Tage</p>
+          <div class="d-flex flex-column ml-4 justify-center">
+            <p class="entity-title">{{ entity.name }}</p>
+            <div class="d-flex flex-row">
+              <p class="entity-text">{{ getType(entity.type) }}</p>
+              <p class="entity-text" v-if="entity.consoleType">
+                - {{ entity.consoleType }}
+              </p>
+            </div>
+            <div class="d-flex flex-row">
+              <v-icon
+                icon="mdi-information"
+                class="info-icon"
+                color="#c2b5ad"
+              ></v-icon>
+              <p class="entity-text">Max. Ausleihdauer: Sieben Tage</p>
+            </div>
           </div>
         </div>
       </div>
-      
-
-      <hr class="divider" />
     </div>
-
+    <v-date-input
+      bg-color="#f6f4f1"
+      prepend-icon=""
+      prepend-inner-icon="$calendar"
+      variant="solo"
+      multiple="range"
+      class="mx-8"
+      v-model="selectedTimeRange"
+    ></v-date-input>
+    <hr class="divider" />
     <div class="ma-8 d-flex flex-row">
       <v-btn class="book-button">Buchen</v-btn>
       <v-spacer />
@@ -53,8 +58,9 @@
 import { ref } from "vue";
 import { useBookingStore } from "../../../data/store/BookingStore";
 import { storeToRefs } from "pinia";
+import { VDateInput } from "vuetify/labs/VDateInput";
 
-const model = ref("");
+const selectedTimeRange = ref("");
 const bookingStore = useBookingStore();
 const { selectedEntitiesForBooking } = storeToRefs(useBookingStore());
 
@@ -76,7 +82,7 @@ function getType(type: string) {
 <style scoped>
 .card {
   background-color: #1e1c1b;
-  width: 35vw;
+  width: 45vw;
   height: 100% !important;
   max-height: 70vh !important;
   z-index: 10;
