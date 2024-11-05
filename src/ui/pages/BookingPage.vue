@@ -14,11 +14,6 @@
       <v-btn>Rückgabe</v-btn>
     </div>
     <SplitEntites
-      entity="Favoriten"
-      @toggle-view="toggleView('favorite')"
-      :isToggled="toggleFavorites"
-    />
-    <SplitEntites
       entity="Spiele"
       @toggle-view="toggleView('game')"
       :isToggled="toggleGames"
@@ -72,7 +67,6 @@ import EntityCard from "../components/booking/EntityCard.vue";
 import { Entity } from "../../ts/types/entity.types";
 
 let selectedForBooking: Ref<Entity[]> = ref([]);
-let toggleFavorites = ref(false);
 let toggleGames = ref(true);
 let toggleConsoles = ref(true);
 let toggleAccessories = ref(true);
@@ -110,8 +104,6 @@ function toggleBookingModule() {
 
 function toggleView(entity: string) {
   switch (entity) {
-    case "favorite":
-      break;
     case "game":
       toggleGames.value = !toggleGames.value;
       break;
