@@ -2,7 +2,9 @@
   <v-card class="card">
     <p class="title">Buchung</p>
     <hr class="divider" />
-
+    <v-date-input
+        v-model="model"
+      ></v-date-input>
     <div v-for="entity in selectedEntitiesForBooking">
       <div class="d-flex flex-row justify-start">
         <div class="ma-8">
@@ -30,11 +32,7 @@
           </div>
         </div>
       </div>
-      <v-date-input
-        v-model="model"
-        label="Select a date"
-        max-width="368"
-      ></v-date-input>
+      
 
       <hr class="divider" />
     </div>

@@ -3,7 +3,7 @@ import { Entity } from "../../ts/types/entity.types";
 
 export const useBookingStore = defineStore("booking", {
   state: () => ({
-    isBookingModuleActive: true,
+    isBookingModuleActive: false,
     selectedEntitiesForBooking: [] as Entity[],
   }),
   getters: {},

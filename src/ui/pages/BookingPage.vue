@@ -1,8 +1,8 @@
-<template>
+<template class="wrapper">
   <v-expand-x-transition>
     <div
       v-show="isAnyEntitySelected"
-      class="book-button-background-active rounded-s-lg postition-fixed"
+      class="book-button-background-active rounded-s-lg"
     >
       <v-btn class="book-button" @click="toggleBookingModule()">Buchen</v-btn>
     </div>
@@ -70,7 +70,6 @@ import { onMounted, computed, ref, Ref } from "vue";
 import { storeToRefs } from "pinia";
 import EntityCard from "../components/booking/EntityCard.vue";
 import { Entity } from "../../ts/types/entity.types";
-import { de } from "vuetify/locale";
 
 let selectedForBooking: Ref<Entity[]> = ref([]);
 let toggleFavorites = ref(false);
@@ -126,6 +125,10 @@ function toggleView(entity: string) {
 }
 </script>
 <style scoped>
+.wrapper {
+  position: relative;
+}
+
 .header {
   color: #1e1c1b;
   font-size: 32;
@@ -143,7 +146,6 @@ function toggleView(entity: string) {
 }
 
 .book-button {
-  top: 20px;
   z-index: 10;
   background-color: #ff8200 !important;
   width: 40%;
@@ -152,12 +154,14 @@ function toggleView(entity: string) {
 }
 
 .book-button-background-active {
-  position: sticky;
+  position: fixed;
+  bottom: 20px;
+  right: 0px;
   z-index: 10;
   width: 15%;
-  height: 5%;
   background-color: #1e1c1b;
-  left: 100%;
-  top: 90%;
+  height: 7%;
+  display: flex;
+  align-items: center;
 }
 </style>

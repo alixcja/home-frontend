@@ -41,6 +41,7 @@ const isSelected = computed(() =>
 .card-position {
   margin-right: 40px;
   height: 15%;
+  position: sticky;
 }
 .selected {
   border-width: 0.25vw !important;
@@ -54,9 +55,9 @@ const isSelected = computed(() =>
 }
 .icon-position {
   justify-content: end;
-  position: relative;
-  top: 24px;
-  left: 90%;
+  position: absolute;
+  top: -12px;
+  right: -12px;
   z-index: 10;
 }
 .card {
