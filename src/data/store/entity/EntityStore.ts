@@ -5,7 +5,11 @@ import { Console } from "../../../ts/types/console.types";
 import { Accessory } from "../../../ts/types/accessory.types";
 
 export const useEntityStore = defineStore("entity", {
-  state: () => ({ allGames: [] as Game[], allConsoles: [] as Console[], allConsoleAccessories: [] as Accessory[] }),
+  state: () => ({
+    allGames: [] as Game[],
+    allConsoles: [] as Console[],
+    allConsoleAccessories: [] as Accessory[],
+  }),
   getters: {},
   actions: {
     async getAllEntites() {
