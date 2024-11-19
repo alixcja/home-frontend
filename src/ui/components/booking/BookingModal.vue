@@ -36,14 +36,13 @@
       bg-color="#f6f4f1"
       prepend-icon=""
       prepend-inner-icon="$calendar"
-      variant="solo"
       multiple="range"
       class="mx-8"
       v-model="selectedTimeRange"
     ></v-date-input>
     <hr class="divider" />
     <div class="ma-8 d-flex flex-row">
-      <v-btn class="book-button">Buchen</v-btn>
+      <v-btn @click="book" class="book-button">Buchen</v-btn>
       <v-spacer />
       <v-btn
         class="cancel-button"
@@ -55,17 +54,31 @@
   </v-card>
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, Ref } from "vue";
 import { useBookingStore } from "../../../data/store/BookingStore";
 import { storeToRefs } from "pinia";
 import { VDateInput } from "vuetify/labs/VDateInput";
 
-const selectedTimeRange = ref("");
+const selectedTimeRange: Ref<Date[]> = ref([]);
 const bookingStore = useBookingStore();
 const { selectedEntitiesForBooking } = storeToRefs(useBookingStore());
 
 function toggleBookingModule() {
   bookingStore.triggerBookingModule();
+}
+
+function book() {
+  // entites
+  // startDate
+  // endDate
+
+  const startDate = selectedTimeRange.value[0];
+  const endDateIndex = selectedTimeRange.value.length - 1;
+  const endDate = selectedTimeRange.value[endDateIndex];
+
+  bookingStore.persistBooking(selectedEntitiesForBooking.value, startDate, endDate)
+
+  console.log(selectedTimeRange.value);
 }
 
 function getType(type: string) {

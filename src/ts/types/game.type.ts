@@ -1,4 +1,4 @@
-export interface Game extends Entity {
+export interface Game extends BookingEntity {
 
     consoleType: string
   }

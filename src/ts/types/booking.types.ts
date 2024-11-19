@@ -1,12 +1,18 @@
-import { Entity } from "./entity.types";
+interface BookingEntity {
+  id: string;
+  name: string;
+  description: string;
+  type: string;
+  isArchived: boolean;
+  addedOn: Date;
+}
 
-export type Booking = {
-  bookingId?: number;
+interface Booking {
   userId: string;
-  bookedBookingEntity: Entity;
+  bookedBookingEntity: BookingEntity;
   startDate: Date;
   endDate: Date;
   bookingDate?: Date;
   isCancelled?: boolean;
   isReturned?: boolean;
-};
+}

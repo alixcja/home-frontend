@@ -1,2 +1,2 @@
-export interface Console extends Entity {
+export interface Console extends BookingEntity {
 }

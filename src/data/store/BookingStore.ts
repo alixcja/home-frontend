@@ -1,28 +1,56 @@
 import { defineStore } from "pinia";
-import { Entity } from "../../ts/types/entity.types";
-import { Booking } from "../../ts/types/booking.types";
 import axios from "axios";
 
 export const useBookingStore = defineStore("booking", {
   state: () => ({
     isBookingModuleActive: false,
-    selectedEntitiesForBooking: [] as Entity[],
+    selectedEntitiesForBooking: [] as BookingEntity[],
   }),
   getters: {},
   actions: {
     triggerBookingModule() {
       this.isBookingModuleActive = !this.isBookingModuleActive;
     },
-    setEntitesForBooking(entities: Entity[]) {
+    setEntitesForBooking(entities: BookingEntity[]) {
       this.selectedEntitiesForBooking = entities;
     },
-    createBookings() {},
-    persistBooking(bookings: Booking[]) {
+
+    persistBooking(
+      selectedEntitiesForBooking: BookingEntity[],
+      startDate: Date,
+      endDate: Date
+    ) {
+      const bookings = this.createBookings(
+        selectedEntitiesForBooking,
+        startDate,
+        endDate
+      );
+
+      console.log(bookings)
+
       if (bookings) {
         axios.post("http://localhost:8000/bookings/new", bookings).then(() => {
           return true;
         });
       }
+    },
+    
+    createBookings(
+      selectedEntitiesForBooking: BookingEntity[],
+      startDate: Date,
+      endDate: Date
+    ) {
+      let bookings: Booking[] = [];
+      selectedEntitiesForBooking.forEach((bookedBookingEntity) => {
+        const  booking: Booking = {
+          userId: "test-person",
+          bookedBookingEntity,
+          startDate,
+          endDate,
+        }
+        bookings.push(booking);
+      });
+      return bookings;
     },
   },
 });

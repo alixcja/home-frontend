@@ -64,9 +64,8 @@ import { useBookingStore } from "../../data/store/BookingStore";
 import { onMounted, computed, ref, Ref } from "vue";
 import { storeToRefs } from "pinia";
 import EntityCard from "../components/booking/EntityCard.vue";
-import { Entity } from "../../ts/types/entity.types";
 
-let selectedForBooking: Ref<Entity[]> = ref([]);
+let selectedForBooking: Ref<BookingEntity[]> = ref([]);
 let toggleGames = ref(true);
 let toggleConsoles = ref(true);
 let toggleAccessories = ref(true);
@@ -83,7 +82,7 @@ const isAnyEntitySelected = computed(() => {
   return selectedForBooking.value.length > 0;
 });
 
-function handleSelectionForEntity(selectedEntity: Entity) {
+function handleSelectionForEntity(selectedEntity: BookingEntity) {
   const exists = selectedForBooking.value.some(
     (entity) => entity.id === selectedEntity.id
   );
