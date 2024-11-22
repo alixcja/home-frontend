@@ -33,7 +33,9 @@ const props = defineProps(["entity", "selectedEntities"]);
 import { computed } from "vue";
 
 const isSelected = computed(() =>
-  props.selectedEntities.some((entity: BookingEntity) => entity.id === props.entity.id)
+  props.selectedEntities.some(
+    (entity: BookingEntity) => entity.id === props.entity.id
+  )
 );
 </script>
 <style>

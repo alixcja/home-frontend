@@ -1,11 +1,9 @@
 <template class="wrapper">
   <v-expand-x-transition>
-    <div
+    <BookButton
       v-show="isAnyEntitySelected"
-      class="book-button-background-active rounded-s-lg"
-    >
-      <v-btn class="book-button" @click="toggleBookingModule()">Buchen</v-btn>
-    </div>
+      @toggleBookingModule="toggleBookingModule"
+    />
   </v-expand-x-transition>
   <div class="position-relative overflow-y-auto ma-6">
     <div class="d-flex flex-row">
@@ -13,64 +11,41 @@
       <v-spacer />
       <v-btn>Rückgabe</v-btn>
     </div>
-    <SplitEntites
-      entity="Spiele"
-      @toggle-view="toggleView('game')"
-      :isToggled="toggleGames"
+    <div v-for="(section, index) in entitySections" :key="index">
+      <SplitEntites
+      :entity="section.label"
+      @toggle-view="toggleView(section.key)"
+      :isToggled="section.toggleState"
     />
-    <div v-if="toggleGames" class="d-flex flex-row ma-8">
-      <div v-for="game in allGames">
-        <EntityCard
-          :entity="game"
-          :selectedEntities="selectedForBooking"
-          @handle-selection="handleSelectionForEntity(game)"
-        ></EntityCard>
+<!--     <v-expand-transition>
+ -->      <div v-if="section.toggleState" class="d-flex flex-row pa-8">
+        <div v-for="entity in section.entities">
+          <EntityCard
+            :entity="entity"
+            :selectedEntities="selectedForBooking"
+            @handle-selection="() => handleSelectionForEntity(entity)"
+          ></EntityCard>
+        </div>
       </div>
-    </div>
-    <SplitEntites
-      entity="Konsolen"
-      @toggle-view="toggleView('console')"
-      :isToggled="toggleConsoles"
-    />
-    <div v-if="toggleConsoles" class="d-flex flex-row ma-8">
-      <div v-for="console in allConsoles">
-        <EntityCard
-          :entity="console"
-          :selectedEntities="selectedForBooking"
-          @handle-selection="handleSelectionForEntity(console)"
-        ></EntityCard>
-      </div>
-    </div>
-    <SplitEntites
-      entity="Konsolen-Zubehör"
-      @toggle-view="toggleView('accessory')"
-      :isToggled="toggleAccessories"
-    />
-    <div v-if="toggleAccessories" class="d-flex flex-row ma-8">
-      <div v-for="accessory in allConsoleAccessories">
-        <EntityCard
-          :entity="accessory"
-          :selectedEntities="selectedForBooking"
-          @handle-selection="handleSelectionForEntity(accessory)"
-        ></EntityCard>
-      </div>
-    </div>
+<!--     </v-expand-transition>
+ -->    </div>
   </div>
 </template>
 <script setup lang="ts">
-import SplitEntites from "../components/booking/SplitEntites.vue";
+import SplitEntites from "../components/booking/bookingpage/Splitter.vue";
 import { useEntityStore } from "../../data/store/entity/EntityStore";
 import { useBookingStore } from "../../data/store/BookingStore";
 import { onMounted, computed, ref, Ref } from "vue";
 import { storeToRefs } from "pinia";
-import EntityCard from "../components/booking/EntityCard.vue";
+import EntityCard from "../components/booking/bookingpage/EntityCard.vue";
+import BookButton from "../components/booking/bookingpage/BookButton.vue";
 
 let selectedForBooking: Ref<BookingEntity[]> = ref([]);
 let toggleGames = ref(true);
 let toggleConsoles = ref(true);
 let toggleAccessories = ref(true);
 
-const { allGames, allConsoles, allConsoleAccessories } =
+const { allGames, allConsoles, allAccessories } =
   storeToRefs(useEntityStore());
 const bookingStore = useBookingStore();
 
@@ -82,18 +57,35 @@ const isAnyEntitySelected = computed(() => {
   return selectedForBooking.value.length > 0;
 });
 
+const entitySections = computed(() => [
+  {
+    label: "Spiel",
+    key: "game",
+    entities: allGames.value,
+    toggleState: toggleGames.value,
+  },
+  {
+    label: "Konsole",
+    key: "console",
+    entities: allConsoles.value,
+    toggleState: toggleConsoles.value,
+  },
+  {
+    label: "Zubehör",
+    key: "accessory",
+    entities: allAccessories.value,
+    toggleState: toggleAccessories.value,
+  },
+]);
+
 function handleSelectionForEntity(selectedEntity: BookingEntity) {
   const exists = selectedForBooking.value.some(
     (entity) => entity.id === selectedEntity.id
   );
 
-  if (exists) {
-    selectedForBooking.value = selectedForBooking.value.filter(
-      (entity) => entity.id !== selectedEntity.id
-    );
-  } else {
-    selectedForBooking.value.push(selectedEntity);
-  }
+  selectedForBooking.value = exists
+    ? selectedForBooking.value.filter((entity) => entity.id !== selectedEntity.id)
+    : [...selectedForBooking.value, selectedEntity];
 }
 
 function toggleBookingModule() {
@@ -134,25 +126,5 @@ function toggleView(entity: string) {
   background-color: #ff8200 !important;
   color: white !important;
   cursor: pointer;
-}
-
-.book-button {
-  z-index: 10;
-  background-color: #ff8200 !important;
-  width: 40%;
-  height: 30%;
-  margin-left: 16px;
-}
-
-.book-button-background-active {
-  position: fixed;
-  bottom: 20px;
-  right: 0px;
-  z-index: 10;
-  width: 15%;
-  background-color: #1e1c1b;
-  height: 7%;
-  display: flex;
-  align-items: center;
 }
 </style>

@@ -8,14 +8,14 @@ export const useEntityStore = defineStore("entity", {
   state: () => ({
     allGames: [] as Game[],
     allConsoles: [] as Console[],
-    allConsoleAccessories: [] as Accessory[],
+    allAccessories: [] as Accessory[],
   }),
   getters: {},
   actions: {
     async getAllEntites() {
       this.getAllGames();
       this.getAllConsoles();
-      this.getAllConsolesAccessory();
+      this.getAllAccessory();
     },
     getAllGames() {
       axios.get("http://localhost:8000/games").then((response) => {
@@ -27,9 +27,9 @@ export const useEntityStore = defineStore("entity", {
         this.allConsoles = response.data;
       });
     },
-    getAllConsolesAccessory() {
+    getAllAccessory() {
       axios.get("http://localhost:8000/accessories").then((response) => {
-        this.allConsoleAccessories = response.data;
+        this.allAccessories = response.data;
       });
     },
   },

@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import HomeHeader from "./ui/components/base/HomeHeader.vue";
 import BookingPage from "./ui/pages/BookingPage.vue";
-import BookingModule from "./ui/components/booking/BookingModal.vue";
+import BookingModule from "./ui/components/booking/bookingmodule/BookingModal.vue";
 import { useBookingStore } from "./data/store/BookingStore";
 import { storeToRefs } from "pinia";
 
