@@ -32,7 +32,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import SplitEntites from "../components/booking/bookingpage/Splitter.vue";
+import SplitEntites from "@/ui/components/booking/bookingpage/Splitter.vue";
 import { useEntityStore } from "../../data/store/entity/EntityStore";
 import { useBookingStore } from "../../data/store/BookingStore";
 import { onMounted, computed, ref, Ref } from "vue";

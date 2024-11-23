@@ -1,15 +1,14 @@
 <template>
   <div class="book-button-background-active rounded-s-lg">
-    <v-btn class="book-button" @click="$emit('toggleBookingModule')"
+    <v-btn class="book-button primary-button" @click="$emit('toggleBookingModule')"
       >Buchen</v-btn
     >
   </div>
 </template>
 <script lang="ts" setup></script>
-<style scoped>
+<style lang="scss">
 .book-button {
   z-index: 10;
-  background-color: #ff8200 !important;
   width: 40%;
   height: 60%;
   margin-left: 16px;
