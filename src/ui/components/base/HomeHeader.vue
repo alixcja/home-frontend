@@ -1,9 +1,21 @@
 <template>
   <v-app-bar class="header" color="#1e1c1b" :elevation="2">
-    <img src="@/assets/exp-home-logo.svg" class="logo" />
+    <img
+      src="@/assets/exp-home-logo.svg"
+      class="logo"
+      @click="directToDashboard"
+    />
   </v-app-bar>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+function directToDashboard() {
+  router.push("/dashboard");
+}
+</script>
 <style scoped lang="scss">
 .header {
   width: 100vw;

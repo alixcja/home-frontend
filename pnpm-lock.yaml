@@ -20,6 +20,9 @@ importers:
       vue:
         specifier: ^3.5.12
         version: 3.5.12(typescript@5.4.5)
+      vue-router:
+        specifier: '4'
+        version: 4.4.5(vue@3.5.12(typescript@5.4.5))
       vuetify:
         specifier: ^3.7.4
         version: 3.7.4(typescript@5.4.5)(vue@3.5.12(typescript@5.4.5))
@@ -649,6 +652,11 @@ packages:
       '@vue/composition-api':
         optional: true
 
+  vue-router@4.4.5:
+    resolution: {integrity: sha512-4fKZygS8cH1yCyuabAXGUAsyi1b2/o/OKgu/RUb+znIYOxPRxdkytJEx+0wGcpBE1pX6vUgh5jwWOKRGvuA/7Q==}
+    peerDependencies:
+      vue: ^3.2.0
+
   vue-template-compiler@2.7.16:
     resolution: {integrity: sha512-AYbUWAJHLGGQM7+cNTELw+KsOG9nl2CnSv467WobS5Cv9uk3wFcnr1Etsz2sEIHEZvw1U+o9mRlEO6QbZvUPGQ==}
 
@@ -1180,6 +1188,11 @@ snapshots:
 
   vue-demi@0.14.10(vue@3.5.12(typescript@5.4.5)):
     dependencies:
+      vue: 3.5.12(typescript@5.4.5)
+
+  vue-router@4.4.5(vue@3.5.12(typescript@5.4.5)):
+    dependencies:
+      '@vue/devtools-api': 6.6.4
       vue: 3.5.12(typescript@5.4.5)
 
   vue-template-compiler@2.7.16:
