@@ -5,6 +5,7 @@ export const useBookingStore = defineStore("booking", {
   state: () => ({
     isBookingModuleActive: false,
     selectedEntitiesForBooking: [] as BookingEntity[],
+    currentBookings: [] as Booking[],
   }),
   getters: {},
   actions: {
@@ -13,6 +14,16 @@ export const useBookingStore = defineStore("booking", {
     },
     setEntitesForBooking(entities: BookingEntity[]) {
       this.selectedEntitiesForBooking = entities;
+    },
+
+    setCurrentBookings(bookings: Booking[]) {
+      this.currentBookings = bookings;
+    },
+
+    fetchAllCurrentBookings() {
+      axios.get("http://localhost:8000/bookings").then((response) => {
+        this.setCurrentBookings(response.data);
+      });
     },
 
     persistBooking(
@@ -26,15 +37,13 @@ export const useBookingStore = defineStore("booking", {
         endDate
       );
 
-      console.log(bookings)
-
       if (bookings) {
         axios.post("http://localhost:8000/bookings/new", bookings).then(() => {
-          return true;
+          this.triggerBookingModule();
         });
       }
     },
-    
+
     createBookings(
       selectedEntitiesForBooking: BookingEntity[],
       startDate: Date,
@@ -42,12 +51,12 @@ export const useBookingStore = defineStore("booking", {
     ) {
       let bookings: Booking[] = [];
       selectedEntitiesForBooking.forEach((bookedBookingEntity) => {
-        const  booking: Booking = {
+        const booking: Booking = {
           userId: "test-person",
           bookedBookingEntity,
           startDate,
           endDate,
-        }
+        };
         bookings.push(booking);
       });
       return bookings;

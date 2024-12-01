@@ -59,13 +59,13 @@ const isAnyEntitySelected = computed(() => {
 
 const entitySections = computed(() => [
   {
-    label: "Spiel",
+    label: "Spiele",
     key: "game",
     entities: allGames.value,
     toggleState: toggleGames.value,
   },
   {
-    label: "Konsole",
+    label: "Konsolen",
     key: "console",
     entities: allConsoles.value,
     toggleState: toggleConsoles.value,
