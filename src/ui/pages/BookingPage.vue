@@ -111,12 +111,6 @@ function toggleView(entity: string) {
   position: relative;
 }
 
-.header {
-  color: #1e1c1b;
-  font-size: 32;
-  font-weight: 700;
-}
-
 .button {
   font-size: 28px;
 }

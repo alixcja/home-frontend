@@ -3,6 +3,23 @@ $primary-color: #ff8200;
 .main {
     background-color: #F6F4F1;
 }
+
+.title {
+    color: #1e1c1b;
+    font-size: 32px;
+}
+
+.subtitle {
+    color: #1e1c1b;
+    font-size: 24px;
+}
+
+.title-bold {
+    color: #1e1c1b;
+    font-size: 32px;
+    font-weight: 700;
+}
+
 .primary-button {
     background-color: $primary-color !important
 }

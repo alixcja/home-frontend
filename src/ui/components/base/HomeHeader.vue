@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar class="header" color="#1e1c1b" :elevation="2">
+  <v-app-bar class="title" color="#1e1c1b" :elevation="2">
     <img
       src="@/assets/exp-home-logo.svg"
       class="logo"
@@ -17,7 +17,7 @@ function directToDashboard() {
 }
 </script>
 <style scoped lang="scss">
-.header {
+.title {
   width: 100vw;
   display: flex;
   padding-left: 8px;
