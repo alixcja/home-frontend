@@ -5,9 +5,12 @@
       class="logo"
       @click="directToDashboard"
     />
+    <v-spacer />
+    <HomeMenu />
   </v-app-bar>
 </template>
 <script setup lang="ts">
+import HomeMenu from "./HomeMenu.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
