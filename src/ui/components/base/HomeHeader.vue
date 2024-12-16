@@ -6,13 +6,15 @@
       @click="directToDashboard"
     />
     <v-spacer />
-    <HomeMenu />
+    <HomeMenu v-if="!route.meta.hideHeader" />
   </v-app-bar>
 </template>
 <script setup lang="ts">
 import HomeMenu from "./HomeMenu.vue";
 import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 const router = useRouter();
 
 function directToDashboard() {

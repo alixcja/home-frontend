@@ -16,6 +16,8 @@ import { useBookingStore } from "./data/store/BookingStore";
 import { storeToRefs } from "pinia";
 
 const { isBookingModuleActive } = storeToRefs(useBookingStore());
+
+
 </script>
 <style scoped>
 .booking-dialog {
