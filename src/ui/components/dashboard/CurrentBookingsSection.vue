@@ -10,7 +10,7 @@
 import { useBookingStore } from "@/data/store/BookingStore";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
-import Card from "@/ui/components/dashboard/Card.vue";
+import Card from "@/ui/components/dashboard/BookingCard.vue";
 
 const bookingStore = useBookingStore();
 const { currentBookings } = storeToRefs(bookingStore);
