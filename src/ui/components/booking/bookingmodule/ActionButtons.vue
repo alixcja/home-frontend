@@ -5,7 +5,7 @@
     <v-btn
       class="cancel-button"
       variant="outlined"
-      @click="$emit('toggleBookingModule')"
+      @click="$emit('cancel')"
       >Abbrechen</v-btn
     >
   </div>
