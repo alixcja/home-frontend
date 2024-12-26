@@ -6,19 +6,16 @@
     />
   </v-expand-x-transition>
   <div class="position-relative overflow-y-auto ma-6">
-    <div class="d-flex flex-row">
-      <h1 class="header">Buchung</h1>
-      <v-spacer />
-      <v-btn>Rückgabe</v-btn>
-    </div>
+    <h1 class="header">Buchung</h1>
     <div v-for="(section, index) in entitySections" :key="index">
       <SplitEntites
-      :entity="section.label"
-      @toggle-view="toggleView(section.key)"
-      :isToggled="section.toggleState"
-    />
-<!--     <v-expand-transition>
- -->      <div v-if="section.toggleState" class="d-flex flex-row pa-8">
+        :entity="section.label"
+        @toggle-view="toggleView(section.key)"
+        :isToggled="section.toggleState"
+      />
+      <!--     <v-expand-transition>
+ -->
+      <div v-if="section.toggleState" class="d-flex flex-row pa-8">
         <div v-for="entity in section.entities">
           <EntityCard
             :entity="entity"
@@ -27,8 +24,9 @@
           ></EntityCard>
         </div>
       </div>
-<!--     </v-expand-transition>
- -->    </div>
+      <!--     </v-expand-transition>
+ -->
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -45,8 +43,7 @@ let toggleGames = ref(true);
 let toggleConsoles = ref(true);
 let toggleAccessories = ref(true);
 
-const { allGames, allConsoles, allAccessories } =
-  storeToRefs(useEntityStore());
+const { allGames, allConsoles, allAccessories } = storeToRefs(useEntityStore());
 const bookingStore = useBookingStore();
 
 onMounted(() => {
@@ -84,7 +81,9 @@ function handleSelectionForEntity(selectedEntity: BookingEntity) {
   );
 
   selectedForBooking.value = exists
-    ? selectedForBooking.value.filter((entity) => entity.id !== selectedEntity.id)
+    ? selectedForBooking.value.filter(
+        (entity) => entity.id !== selectedEntity.id
+      )
     : [...selectedForBooking.value, selectedEntity];
 }
 
