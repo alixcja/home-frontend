@@ -2,21 +2,19 @@
   <v-card class="card">
     <p class="title">Buchung</p>
     <hr class="divider" />
-    <div class="">
-      <EntitySection
-        v-for="entity in selectedEntitiesForBooking"
-        :entity="entity"
-      />
-    </div>
+    <EntitySection
+      v-for="entity in selectedEntitiesForBooking"
+      :entity="entity"
+    />
     <v-date-input
       bg-color="#f6f4f1"
       prepend-icon=""
       prepend-inner-icon="$calendar"
       multiple="range"
-      class="mx-8"
+      class="mt-6 mx-8"
       v-model="selectedTimeRange"
     ></v-date-input>
-    <div class="d-flex flex-row ml-8">
+    <div class="d-flex flex-row ml-8 mb-6">
       <v-icon icon="mdi-information" class="info-icon" color="#c2b5ad"></v-icon>
       <p class="information-text">Max. Ausleihdauer: Sieben Tage</p>
     </div>
@@ -50,21 +48,19 @@ function book() {
     startDate,
     endDate
   );
-
-  console.log(selectedTimeRange.value);
 }
 </script>
 <style scoped>
+.card::-webkit-scrollbar {
+  display: none;
+}
 .card {
   background-color: #1e1c1b;
-  width: 45vw;
-  height: 100% !important;
-  max-height: 70vh !important;
   z-index: 10;
   padding: 16px;
   display: flex;
+  width: 100% !important;
 }
-
 
 .info-icon {
   margin-right: 16px;
