@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import axiosInstance from "../api/axios";
 
 export const useBookingStore = defineStore("booking", {
   state: () => ({
@@ -21,7 +21,7 @@ export const useBookingStore = defineStore("booking", {
     },
 
     fetchAllCurrentBookings() {
-      axios.get("http://localhost:8000/bookings").then((response) => {
+      axiosInstance.get("http://localhost:8000/bookings").then((response) => {
         this.setCurrentBookings(response.data);
       });
     },
@@ -38,7 +38,7 @@ export const useBookingStore = defineStore("booking", {
       );
 
       if (bookings) {
-        axios.post("http://localhost:8000/bookings/new", bookings).then(() => {
+        axiosInstance.post("http://localhost:8000/bookings/new", bookings).then(() => {
           this.triggerBookingModule();
         });
       }

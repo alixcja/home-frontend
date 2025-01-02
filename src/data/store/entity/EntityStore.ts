@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
-import axios from "axios";
 import { Game } from "../../../ts/types/game.type";
 import { Console } from "../../../ts/types/console.types";
 import { Accessory } from "../../../ts/types/accessory.types";
+import axiosInstance from "@/data/api/axios";
 
 export const useEntityStore = defineStore("entity", {
   state: () => ({
@@ -18,17 +18,17 @@ export const useEntityStore = defineStore("entity", {
       this.getAllAccessory();
     },
     getAllGames() {
-      axios.get("http://localhost:8000/games").then((response) => {
+      axiosInstance.get("http://localhost:8000/games").then((response) => {
         this.allGames = response.data;
       });
     },
     getAllConsoles() {
-      axios.get("http://localhost:8000/consoles").then((response) => {
+      axiosInstance.get("http://localhost:8000/consoles").then((response) => {
         this.allConsoles = response.data;
       });
     },
     getAllAccessory() {
-      axios.get("http://localhost:8000/accessories").then((response) => {
+      axiosInstance.get("http://localhost:8000/accessories").then((response) => {
         this.allAccessories = response.data;
       });
     },

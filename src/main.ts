@@ -8,6 +8,8 @@ import * as directives from "vuetify/directives";
 import "@mdi/font/css/materialdesignicons.css";
 import { createPinia } from "pinia";
 import router from "@/router/index.ts"
+import keycloakService from '@/services/keycloakService';
+
 
 const vuetify = createVuetify({
   components,
@@ -16,4 +18,10 @@ const vuetify = createVuetify({
 
 const pinia = createPinia();
 
-createApp(App).use(router).use(vuetify).use(pinia).mount("#app");
+keycloakService.CallInit(() => {
+  createApp(App)
+    .use(router)
+    .use(vuetify)
+    .use(pinia)
+    .mount('#app');
+});
