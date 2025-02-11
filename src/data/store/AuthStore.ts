@@ -11,9 +11,7 @@ export const useAuthStore = defineStore({
       test: false,
     };
   },
-  getters: {
-    
-  },
+  getters: {},
   actions: {
     async initOauth(keycloak: KeycloakTokenParsed, clearData = true) {
       if (clearData) {
@@ -24,7 +22,17 @@ export const useAuthStore = defineStore({
       this.currentUser.firstName = keycloak.idTokenParsed.given_name;
       this.currentUser.lastName = keycloak.idTokenParsed.family_name;
       this.currentUser.accessToken = keycloak.token;
+      this.isUserHomeAdmin(keycloak.tokenParsed.groups);
       //this.user.refToken = keycloak.refreshToken;
+    },
+
+    isUserHomeAdmin(roles: string[]) {
+      debugger
+      if (roles.includes("home-admin")) {
+        this.currentUser.isHomeAdmin = true;
+      } else {
+        this.currentUser.isHomeAdmin = false;
+      }
     },
 
     async logout() {
@@ -51,7 +59,7 @@ export const useAuthStore = defineStore({
     },
 
     getCurrentUser(): User {
-        return this.currentUser;
-    }
+      return this.currentUser;
+    },
   },
 });

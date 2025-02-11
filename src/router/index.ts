@@ -17,6 +17,11 @@ const routes = [
     component: () => import("@/ui/pages/LoginPage.vue"),
     meta: { hideHeader: true },
   },
+  {
+    path: "/settings",
+    component: () => import("@/ui/pages/SettingsPage.vue"),
+    meta: { hideHeader: false },
+  }
 ];
 
 const router = createRouter({

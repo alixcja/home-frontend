@@ -3,4 +3,6 @@ interface User {
     firstName: string;
     lastName: string;
     accessToken: string;
+    roles: [];
+    isHomeAdmin: boolean;
 }
