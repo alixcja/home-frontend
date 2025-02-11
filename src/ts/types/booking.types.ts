@@ -8,6 +8,7 @@ interface BookingEntity {
 }
 
 interface Booking {
+  id: number,
   userId: string;
   bookingEntity: BookingEntity;
   startDate: Date;

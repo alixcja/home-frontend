@@ -5,22 +5,31 @@
         width="40%"
         src="https://www.movasis.com/wp-content/uploads/2017/01/image-placeholder-500x500.jpg"
       ></v-img>
-      <div>
-        <h3>{{ props.booking.bookedBookingEntity.name }}</h3>
-        <p>
+      <div class="ma-4">
+        <h3>{{ props.booking.bookingEntity.name }}</h3>
+        <p class="mt-3">
           Das Spiel gehört vom {{ props.booking.startDate }} bis
           {{ props.booking.endDate }} nur dir!
         </p>
-        <div width="100% d-flex justify-end">
-            <v-btn>Rückgabe</v-btn>
-
+        <div width="100%" class="d-flex justify-end align-end mt-3">
+          <v-btn @click="openReturnModal" class="login-button primary-button">Abgabe</v-btn>
         </div>
       </div>
+  
     </div>
   </v-card>
 </template>
 <script lang="ts" setup>
+import { useBookingStore } from '@/data/store/BookingStore';
+
 const props = defineProps(["booking"]);
+const bookingStore = useBookingStore();
+
+function openReturnModal() {
+  console.log(props.booking)
+  useBookingStore().setBookingToReturn(props.booking)
+  bookingStore.triggerReturnBookingModule()
+}
 </script>
 <style scoped>
 .card {
