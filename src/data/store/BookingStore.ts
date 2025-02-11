@@ -4,16 +4,21 @@ import axiosInstance from "../api/axios";
 export const useBookingStore = defineStore("booking", {
   state: () => ({
     isBookingModuleActive: false,
+    isReturnBookingModuleActive: false,
     selectedEntitiesForBooking: [] as BookingEntity[],
     currentBookings: [] as Booking[],
     overdueBookings: [] as Booking[],
     hasCurrentOrFutureBookings: false,
     hasBookingsOverdue: false,
+    bookingToReturn: {} as Booking,
   }),
   getters: {},
   actions: {
     triggerBookingModule() {
       this.isBookingModuleActive = !this.isBookingModuleActive;
+    },
+    triggerReturnBookingModule() {
+      this.isReturnBookingModuleActive = !this.isReturnBookingModuleActive;
     },
     setEntitesForBooking(entities: BookingEntity[]) {
       this.selectedEntitiesForBooking = entities;
@@ -25,6 +30,10 @@ export const useBookingStore = defineStore("booking", {
 
     setOverdueBookings(bookings: Booking[]) {
       this.overdueBookings = bookings;
+    },
+
+    setBookingToReturn(booking: Booking) {
+      this.bookingToReturn = booking;
     },
 
     fetchAllBookings() {
@@ -79,9 +88,9 @@ export const useBookingStore = defineStore("booking", {
       startDate: Date,
       endDate: Date
     ) {
-      let bookings: Booking[] = [];
+      let bookings:  Partial<Booking>[] = [];
       selectedEntitiesForBooking.forEach((bookingEntity) => {
-        const booking: Booking = {
+        const booking: Partial<Booking> = {
           userId: "test-person",
           bookingEntity,
           startDate,
@@ -91,5 +100,12 @@ export const useBookingStore = defineStore("booking", {
       });
       return bookings;
     },
+
+    returnBooking() {
+      if (this.bookingToReturn) {
+        axiosInstance
+        .put(`${import.meta.env.VITE_BACKEND_URL}/bookings/return/${this.bookingToReturn.id}`);
+      }
+    }
   },
 });

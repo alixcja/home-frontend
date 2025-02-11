@@ -5,6 +5,9 @@
       <v-dialog v-model="isBookingModuleActive" class="booking-dialog">
         <BookingModal />
       </v-dialog>
+      <v-dialog v-model="isReturnBookingModuleActive" class="booking-dialog">
+        <ReturnModal />
+      </v-dialog>
       <router-view />
     </v-main>
   </v-app>
@@ -14,8 +17,9 @@ import HomeHeader from "./ui/components/base/HomeHeader.vue";
 import BookingModal from "./ui/components/booking/bookingmodule/BookingModal.vue";
 import { useBookingStore } from "./data/store/BookingStore";
 import { storeToRefs } from "pinia";
+import ReturnModal from "./ui/components/dashboard/modal/ReturnModal.vue";
 
-const { isBookingModuleActive } = storeToRefs(useBookingStore());
+const { isBookingModuleActive, isReturnBookingModuleActive } = storeToRefs(useBookingStore());
 
 
 </script>
