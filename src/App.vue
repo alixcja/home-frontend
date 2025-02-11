@@ -13,11 +13,11 @@
   </v-app>
 </template>
 <script setup lang="ts">
-import HomeHeader from "./ui/components/base/HomeHeader.vue";
+import HomeHeader from "./ui/components/base/header/HomeHeader.vue";
 import BookingModal from "./ui/components/booking/bookingmodule/BookingModal.vue";
 import { useBookingStore } from "./data/store/BookingStore";
 import { storeToRefs } from "pinia";
-import ReturnModal from "./ui/components/dashboard/modal/ReturnModal.vue";
+import ReturnModal from "./ui/components/dashboard/ReturnModal.vue";
 
 const { isBookingModuleActive, isReturnBookingModuleActive } = storeToRefs(useBookingStore());
 

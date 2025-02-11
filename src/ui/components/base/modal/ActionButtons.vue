@@ -1,6 +1,6 @@
 <template>
-  <div class="ma-8 d-flex flex-row">
-    <v-btn @click="$emit('return')" class="book-button">Abgabe</v-btn>
+  <div class="ma-6 d-flex flex-row">
+    <v-btn @click="$emit('confirm')" class="book-button"> {{ props.confirmButtonTitle  }}</v-btn>
     <v-spacer />
     <v-btn
       class="cancel-button"
@@ -10,7 +10,12 @@
     >
   </div>
 </template>
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { defineProps } from "vue";
+
+const props = defineProps({
+  confirmButtonTitle: String,
+});</script>
 <style scoped>
 .book-button {
   width: 40%;

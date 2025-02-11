@@ -1,11 +1,11 @@
 <template>
-  <v-card class="card">
-    <p class="title">Buchung</p>
-    <hr class="divider" />
-    <EntitySection
-      v-for="entity in selectedEntitiesForBooking"
-      :entity="entity"
-    />
+  <HomeBaseModal
+    title="Buchung"
+    confirm-button-title="Buchen"
+    :entities="selectedEntitiesForBooking"
+    @confirm="book"
+    @cancel="toggleBookingModule"
+  >
     <v-date-input
       bg-color="#f6f4f1"
       prepend-icon=""
@@ -18,17 +18,14 @@
       <v-icon icon="mdi-information" class="info-icon" color="#c2b5ad"></v-icon>
       <p class="information-text">Max. Ausleihdauer: Sieben Tage</p>
     </div>
-    <hr class="divider" />
-    <ActionButtons @book="book" @cancel="toggleBookingModule" />
-  </v-card>
+  </HomeBaseModal>
 </template>
 <script lang="ts" setup>
 import { ref, Ref } from "vue";
 import { useBookingStore } from "../../../../data/store/BookingStore";
 import { storeToRefs } from "pinia";
 import { VDateInput } from "vuetify/labs/VDateInput";
-import EntitySection from "../bookingmodule/EntitySection.vue";
-import ActionButtons from "./ActionButtons.vue";
+import HomeBaseModal from "../../base/modal/BaseModal.vue";
 
 const selectedTimeRange: Ref<Date[]> = ref([]);
 const bookingStore = useBookingStore();
@@ -51,17 +48,6 @@ function book() {
 }
 </script>
 <style scoped>
-.card::-webkit-scrollbar {
-  display: none;
-}
-.card {
-  background-color: #1e1c1b;
-  z-index: 10;
-  padding: 16px;
-  display: flex;
-  width: 100% !important;
-}
-
 .info-icon {
   margin-right: 16px;
   display: flex;
@@ -73,11 +59,6 @@ function book() {
   color: #f6f4f1;
   font-weight: 600;
   text-align: center;
-}
-
-.divider {
-  margin: 16px;
-  color: #f6f4f1;
 }
 
 .information-text {

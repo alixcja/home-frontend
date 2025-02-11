@@ -8,7 +8,7 @@
   <div class="position-relative overflow-y-auto ma-6">
     <h1 class="header">Buchung</h1>
     <div v-for="(section, index) in entitySections" :key="index">
-      <SplitEntites
+      <Divider
         :entity="section.label"
         @toggle-view="toggleView(section.key)"
         :isToggled="section.toggleState"
@@ -30,7 +30,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import SplitEntites from "@/ui/components/booking/bookingpage/Splitter.vue";
+import Divider from "@/ui/components/booking/bookingpage/Divider.vue";
 import { useEntityStore } from "../../data/store/entity/EntityStore";
 import { useBookingStore } from "../../data/store/BookingStore";
 import { onMounted, computed, ref, Ref } from "vue";
