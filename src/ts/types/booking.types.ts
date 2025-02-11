@@ -9,7 +9,7 @@ interface BookingEntity {
 
 interface Booking {
   userId: string;
-  bookedBookingEntity: BookingEntity;
+  bookingEntity: BookingEntity;
   startDate: Date;
   endDate: Date;
   bookingDate?: Date;

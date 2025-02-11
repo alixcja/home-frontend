@@ -18,19 +18,23 @@ export const useEntityStore = defineStore("entity", {
       this.getAllAccessory();
     },
     getAllGames() {
-      axiosInstance.get("http://localhost:8000/games").then((response) => {
-        this.allGames = response.data;
-      });
+      axiosInstance
+        .get(`${import.meta.env.VITE_BACKEND_URL}/games`)
+        .then((response) => {
+          this.allGames = response.data;
+        });
     },
     getAllConsoles() {
-      axiosInstance.get("http://localhost:8000/consoles").then((response) => {
+      axiosInstance.get(`${import.meta.env.VITE_BACKEND_URL}/consoles`).then((response) => {
         this.allConsoles = response.data;
       });
     },
     getAllAccessory() {
-      axiosInstance.get("http://localhost:8000/accessories").then((response) => {
-        this.allAccessories = response.data;
-      });
+      axiosInstance
+        .get(`${import.meta.env.VITE_BACKEND_URL}/accessories`)
+        .then((response) => {
+          this.allAccessories = response.data;
+        });
     },
   },
 });

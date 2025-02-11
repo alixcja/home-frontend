@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
 });
   
   axiosInstance.interceptors.request.use(async (request) => {
-    const authStore = useAuthStore(); // Always retrieve the store dynamically
+    const authStore = useAuthStore();
     const token = authStore.getCurrentUser()?.accessToken;
   
     if (request.headers && token) {

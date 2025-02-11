@@ -27,28 +27,31 @@ export const useBookingStore = defineStore("booking", {
       this.overdueBookings = bookings;
     },
 
-    
     fetchAllBookings() {
       this.fetchAllCurrentBookings();
       this.fetchAllOverdueBookings();
     },
 
     fetchAllCurrentBookings() {
-      axiosInstance.get("http://localhost:8000/bookings").then((response) => {
-        if (response.data.length > 0) {
-          this.setCurrentBookings(response.data);
-          this.hasCurrentOrFutureBookings = true;
-        }
-      });
+      axiosInstance
+        .get(`${import.meta.env.VITE_BACKEND_URL}/bookings?status=upcoming`)
+        .then((response) => {
+          if (response.data.length > 0) {
+            this.setCurrentBookings(response.data);
+            this.hasCurrentOrFutureBookings = true;
+          }
+        });
     },
 
     fetchAllOverdueBookings() {
-      axiosInstance.get("http://localhost:8000/bookings/overdue").then((response) => {
-        if (response.data.length > 0) {
-          this.setOverdueBookings(response.data);
-          this.hasBookingsOverdue = true;
-        }
-      });
+      axiosInstance
+        .get(`${import.meta.env.VITE_BACKEND_URL}/bookings?status=overdue`)
+        .then((response) => {
+          if (response.data.length > 0) {
+            this.setOverdueBookings(response.data);
+            this.hasBookingsOverdue = true;
+          }
+        });
     },
 
     persistBooking(
@@ -63,9 +66,11 @@ export const useBookingStore = defineStore("booking", {
       );
 
       if (bookings) {
-        axiosInstance.post("http://localhost:8000/bookings/new", bookings).then(() => {
-          this.triggerBookingModule();
-        });
+        axiosInstance
+          .post(`${import.meta.env.VITE_BACKEND_URL}/bookings`, bookings)
+          .then(() => {
+            this.triggerBookingModule();
+          });
       }
     },
 
@@ -75,10 +80,10 @@ export const useBookingStore = defineStore("booking", {
       endDate: Date
     ) {
       let bookings: Booking[] = [];
-      selectedEntitiesForBooking.forEach((bookedBookingEntity) => {
+      selectedEntitiesForBooking.forEach((bookingEntity) => {
         const booking: Booking = {
           userId: "test-person",
-          bookedBookingEntity,
+          bookingEntity,
           startDate,
           endDate,
         };
