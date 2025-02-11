@@ -24,3 +24,4 @@ onMounted(() => {
   bookingStore.fetchAllBookings();
 });
 </script>
+<style lang="sass"></style>

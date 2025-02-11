@@ -1,5 +1,5 @@
 <template>
-  <p class="subtitle">Aktuelle Buchungen</p>
+  <p class="subtitle">Abgelaufene Buchungen</p>
   <div class="d-flex flex-wrap">
     <div v-for="booking in overdueBookings">
       <Card :booking="booking" />

@@ -27,7 +27,6 @@ export const useAuthStore = defineStore({
     },
 
     isUserHomeAdmin(roles: string[]) {
-      debugger
       if (roles.includes("home-admin")) {
         this.currentUser.isHomeAdmin = true;
       } else {

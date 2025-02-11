@@ -7,12 +7,14 @@
       ></v-img>
       <div class="ma-4">
         <h3>{{ props.booking.bookingEntity.name }}</h3>
-        <p class="mt-3">
+        <p class="mt-2">
           Das Spiel gehört vom {{ props.booking.startDate }} bis
           {{ props.booking.endDate }} nur dir!
         </p>
-        <div width="100%" class="d-flex justify-end align-end mt-3">
-          <v-btn @click="openReturnModal" class="login-button primary-button">Abgabe</v-btn>
+        <div width="100%" class="d-flex justify-end align-end mt-2">
+          <v-btn v-if="isActive()" @click="openReturnModal" class="login-button primary-button">Abgabe</v-btn>
+          <v-btn v-else @click="openReturnModal" class="login-button primary-button">Stornieren</v-btn>
+
         </div>
       </div>
   
@@ -25,6 +27,10 @@ import { useBookingStore } from '@/data/store/BookingStore';
 const props = defineProps(["booking"]);
 const bookingStore = useBookingStore();
 
+function isActive() {
+  return new Date(props.booking.startDate) <= new Date();
+}
+
 function openReturnModal() {
   console.log(props.booking)
   useBookingStore().setBookingToReturn(props.booking)
@@ -33,7 +39,7 @@ function openReturnModal() {
 </script>
 <style scoped>
 .card {
-  width: 25vw;
+  width: 22vw;
   height: 20vh;
   margin-top: 16px;
   margin-bottom: 16px;

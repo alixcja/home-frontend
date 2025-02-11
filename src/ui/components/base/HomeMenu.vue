@@ -23,7 +23,6 @@ import { storeToRefs } from "pinia";
 import HomeMenuButton from "./HomeMenuButton.vue";
 import { useAuthStore } from "@/data/store/AuthStore";
 
-debugger
 const { currentUser } = storeToRefs(useAuthStore());
 </script>
 <style scoped>
