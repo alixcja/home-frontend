@@ -14,7 +14,7 @@ export default ({ mode }: { mode: any }) => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "@/styles/global.scss";`,
+          additionalData: `@use "@/styles/global.scss";`,
         },
       },
     },

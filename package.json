@@ -16,17 +16,17 @@
     "pinia": "^2.2.6",
     "vue": "^3.5.13",
     "vue-router": "4",
-    "vuetify": "^3.7.6"
+    "vuetify": "^3.7.12"
   },
   "devDependencies": {
     "@mdi/font": "^7.4.47",
     "@types/node": "^20.12.8",
-    "@vitejs/plugin-vue": "^5.0.4",
+    "@vitejs/plugin-vue": "^5.2.1",
     "material-design-icons-iconfont": "^6.7.0",
     "prettier": "^3.2.5",
-    "sass": "^1.76.0",
+    "sass": "^1.84.0",
     "typescript": "^5.2.2",
-    "vite": "^5.4.14",
+    "vite": "^6.1.0",
     "vue-tsc": "^2.0.6"
   }
 }
