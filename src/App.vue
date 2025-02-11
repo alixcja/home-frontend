@@ -14,7 +14,7 @@
 </template>
 <script setup lang="ts">
 import HomeHeader from "./ui/components/base/header/HomeHeader.vue";
-import BookingModal from "./ui/components/booking/bookingmodule/BookingModal.vue";
+import BookingModal from "./ui/components/booking/BookingModal.vue";
 import { useBookingStore } from "./data/store/BookingStore";
 import { storeToRefs } from "pinia";
 import ReturnModal from "./ui/components/dashboard/ReturnModal.vue";

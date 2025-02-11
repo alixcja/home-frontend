@@ -22,10 +22,10 @@
 </template>
 <script lang="ts" setup>
 import { ref, Ref } from "vue";
-import { useBookingStore } from "../../../../data/store/BookingStore";
+import { useBookingStore } from "../../../data/store/BookingStore";
 import { storeToRefs } from "pinia";
 import { VDateInput } from "vuetify/labs/VDateInput";
-import HomeBaseModal from "../../base/modal/BaseModal.vue";
+import HomeBaseModal from "../base/modal/BaseModal.vue";
 
 const selectedTimeRange: Ref<Date[]> = ref([]);
 const bookingStore = useBookingStore();

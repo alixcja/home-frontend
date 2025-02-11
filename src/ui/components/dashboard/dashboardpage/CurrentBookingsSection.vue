@@ -1,7 +1,7 @@
 <template>
-  <p class="subtitle">Abgelaufene Buchungen</p>
+  <p class="subtitle">Aktuelle Buchungen</p>
   <div class="d-flex flex-wrap">
-    <div v-for="booking in overdueBookings">
+    <div v-for="booking in currentBookings">
       <Card :booking="booking" />
     </div>
   </div>
@@ -10,10 +10,10 @@
 import { useBookingStore } from "@/data/store/BookingStore";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
-import Card from "@/ui/components/dashboard/BookingCard.vue";
+import Card from "@/ui/components/dashboard/dashboardpage/BookingCard.vue";
 
 const bookingStore = useBookingStore();
-const { overdueBookings } = storeToRefs(bookingStore);
+const { currentBookings } = storeToRefs(bookingStore);
 
 onMounted(() => {
   bookingStore.fetchAllCurrentBookings();

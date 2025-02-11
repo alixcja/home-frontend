@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 import { defineProps, PropType } from "vue";
 import ActionButtons from "./ActionButtons.vue";
-import EntitySection from "../../booking/bookingmodule/EntitySection.vue";
+import EntitySection from "./EntitySection.vue";
 
 const props = defineProps({
   title: String,

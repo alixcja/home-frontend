@@ -11,8 +11,8 @@
 </template>
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import CurrentBookingsSection from "../components/dashboard/CurrentBookingsSection.vue";
-import OverdueBookingsSection from "../components/dashboard/OverdueBookingsSection.vue";
+import CurrentBookingsSection from "../components/dashboard/dashboardpage/CurrentBookingsSection.vue";
+import OverdueBookingsSection from "../components/dashboard/dashboardpage/OverdueBookingsSection.vue";
 import { useBookingStore } from "@/data/store/BookingStore";
 import { onMounted } from "vue";
 
