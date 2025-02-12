@@ -1,9 +1,8 @@
-# Vue 3 + TypeScript + Vite
+# EXP Home Frontend
+Here is the frontend for EXP Home, which has been completely reengineered in Vue 3.
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+EXP Home was an internal company website for booking various gaming consoles, console accessories, and games. It also includes a dashboard with all the latest news and important information.
 
-## Recommended Setup
+In the future, a restaurant list will be added to make choosing lunch options easier. Additionally, there will be a group order feature and a voting system to decide what to eat for lunch.
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
-
-- Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+You can find the corresponding backend [here](https://github.com/alixcja/home-backend).
