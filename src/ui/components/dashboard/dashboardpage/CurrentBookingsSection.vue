@@ -2,7 +2,7 @@
   <p class="subtitle">Aktuelle Buchungen</p>
   <div class="d-flex flex-wrap">
     <div v-for="booking in currentBookings">
-      <Card :booking="booking" />
+      <Card :booking="booking" :overdue="false" />
     </div>
   </div>
 </template>

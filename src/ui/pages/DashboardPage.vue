@@ -1,6 +1,6 @@
 <template>
   <div class="ma-6">
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row mb-4">
       <p class="title">
         Willkommen zurück, <span class="title-bold ml-2">Alicja Pater!</span>
       </p>
