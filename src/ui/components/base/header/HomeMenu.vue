@@ -1,7 +1,11 @@
 <template>
-  <HomeMenuButton :iconType="'mdi-home'" :redirect="'/dashboard'" />
+  <HomeMenuButton
+    :iconType="'mdi-home'"
+    :redirect="'/dashboard'"
+    class="mr-4"
+  />
   <HomeMenuButton :iconType="'mdi-calendar-blank'" :redirect="'/booking'" />
-<!--   <HomeMenuButton
+  <!--   <HomeMenuButton
     :iconType="'mdi-silverware-fork-knife'"
     :redirect="'/restaurant'"
   /> -->

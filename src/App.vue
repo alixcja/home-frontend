@@ -27,6 +27,6 @@ const { isBookingModuleActive, isReturnBookingModuleActive } = storeToRefs(useBo
 .booking-dialog {
   width: 40vw;
   height: 100% !important;
-  max-height: 70vh !important;
+  max-height: 75vh !important;
 }
 </style>

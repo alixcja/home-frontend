@@ -13,6 +13,7 @@
       multiple="range"
       class="mt-6 mx-8"
       v-model="selectedTimeRange"
+      :allowed-dates="disableAllDatesBeforeNow"
     ></v-date-input>
     <div class="d-flex flex-row ml-8 mb-6">
       <v-icon icon="mdi-information" class="info-icon" color="#c2b5ad"></v-icon>
@@ -21,7 +22,7 @@
   </HomeBaseModal>
 </template>
 <script lang="ts" setup>
-import { ref, Ref } from "vue";
+import { computed, ref, Ref } from "vue";
 import { useBookingStore } from "../../../data/store/BookingStore";
 import { storeToRefs } from "pinia";
 import { VDateInput } from "vuetify/labs/VDateInput";
@@ -35,6 +36,15 @@ function toggleBookingModule() {
   bookingStore.triggerBookingModule();
 }
 
+const disableAllDatesBeforeNow = computed(() => {
+  return (val: Date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const currentDate = new Date(val);
+    currentDate.setHours(0, 0, 0, 0);
+    return currentDate >= today;
+  };
+});
 function book() {
   const startDate = selectedTimeRange.value[0];
   const endDateIndex = selectedTimeRange.value.length - 1;
