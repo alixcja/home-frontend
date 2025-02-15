@@ -35,7 +35,7 @@ import { useEntityStore } from "../../data/store/entity/EntityStore";
 import { useBookingStore } from "../../data/store/BookingStore";
 import { onMounted, computed, ref, Ref } from "vue";
 import { storeToRefs } from "pinia";
-import EntityCard from "../components/booking/bookingpage/EntityCard.vue";
+import EntityCard from "../components/booking/bookingpage/BookingCard.vue";
 import BookButton from "../components/booking/bookingpage/BookButton.vue";
 
 let selectedForBooking: Ref<BookingEntity[]> = ref([]);

@@ -18,7 +18,7 @@
   <HomeMenuButton
     v-if="currentUser.isHomeAdmin"
     :iconType="'mdi-cog'"
-    :redirect="'/settings'"
+    :redirect="'/admin'"
     class="mr-4"
   />
 </template>

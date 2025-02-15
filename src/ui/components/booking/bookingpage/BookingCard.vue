@@ -12,7 +12,7 @@
     >
       <v-img
         width="100%"
-        src="https://www.movasis.com/wp-content/uploads/2017/01/image-placeholder-500x500.jpg"
+        :src="imageSrc"
       ></v-img>
       <div class="px-2 py-2">
         <b class="selected">{{ props.entity.name }}</b>
@@ -30,8 +30,17 @@
 </template>
 <script setup lang="ts">
 const props = defineProps(["entity", "selectedEntities"]);
-import { computed } from "vue";
+import { useEntityStore } from "@/data/store/entity/EntityStore";
+import { computed, onMounted, ref } from "vue";
 
+
+const imageSrc = ref("");
+
+onMounted(getImageForEntity);
+
+async function getImageForEntity() {
+  imageSrc.value =  await useEntityStore().getImageForEntity(props.entity?.id);
+}
 const isSelected = computed(() =>
   props.selectedEntities.some(
     (entity: BookingEntity) => entity.id === props.entity.id

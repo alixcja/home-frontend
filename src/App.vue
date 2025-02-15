@@ -2,10 +2,10 @@
   <v-app>
     <HomeHeader></HomeHeader>
     <v-main class="main">
-      <v-dialog v-model="isBookingModuleActive" class="booking-dialog">
+      <v-dialog v-model="isBookingModuleActive" class="dialog">
         <BookingModal />
       </v-dialog>
-      <v-dialog v-model="isReturnBookingModuleActive" class="booking-dialog">
+      <v-dialog v-model="isReturnBookingModuleActive" class="dialog">
         <ReturnModal />
       </v-dialog>
       <router-view />
@@ -21,12 +21,6 @@ import ReturnModal from "./ui/components/dashboard/ReturnModal.vue";
 
 const { isBookingModuleActive, isReturnBookingModuleActive } = storeToRefs(useBookingStore());
 
-
 </script>
 <style scoped>
-.booking-dialog {
-  width: 40vw;
-  height: 100% !important;
-  max-height: 75vh !important;
-}
 </style>

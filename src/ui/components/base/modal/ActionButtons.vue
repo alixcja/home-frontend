@@ -1,12 +1,11 @@
 <template>
-  <div class="ma-6 d-flex flex-row">
-    <v-btn @click="$emit('confirm')" class="book-button"> {{ props.confirmButtonTitle  }}</v-btn>
+  <div class="ma-2 d-flex flex-row">
+    <v-btn @click="$emit('confirm')" class="book-button">
+      {{ props.confirmButtonTitle }}</v-btn
+    >
     <v-spacer />
-    <v-btn
-      class="cancel-button"
-      variant="outlined"
-      @click="$emit('cancel')"
-      >Abbrechen</v-btn
+    <v-btn class="cancel-button" variant="outlined" @click="$emit('cancel')">
+      {{ props.cancelButtonTitle || "Abbrechen" }}</v-btn
     >
   </div>
 </template>
@@ -15,7 +14,9 @@ import { defineProps } from "vue";
 
 const props = defineProps({
   confirmButtonTitle: String,
-});</script>
+  cancelButtonTitle: String,
+});
+</script>
 <style scoped>
 .book-button {
   width: 40%;

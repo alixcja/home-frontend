@@ -18,8 +18,8 @@ const routes = [
     meta: { hideHeader: true },
   },
   {
-    path: "/settings",
-    component: () => import("@/ui/pages/SettingsPage.vue"),
+    path: "/admin",
+    component: () => import("@/ui/pages/AdminPage.vue"),
     meta: { hideHeader: false },
   }
 ];

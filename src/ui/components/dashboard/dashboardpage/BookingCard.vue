@@ -1,11 +1,7 @@
 <template>
   <v-card class="card elevation-24 rounded-xl">
     <div class="d-flex flex-row">
-      <v-img
-        height="100%"
-        width="40%"
-        src="https://www.movasis.com/wp-content/uploads/2017/01/image-placeholder-500x500.jpg"
-      ></v-img>
+      <v-img height="100%" width="40%" :src="imageSrc"></v-img>
       <div class="d-flex flex-column">
         <div class="ma-4">
           <h3>{{ props.booking.bookingEntity.name }}</h3>
@@ -17,13 +13,13 @@
           <v-btn
             v-if="isActive()"
             @click="openReturnModal"
-            class="login-button primary-button"
+            class="primary-button button-width"
             >Abgabe</v-btn
           >
           <v-btn
             v-else
             @click="openReturnModal"
-            class="login-button primary-button"
+            class="primary-button button-width"
             >Stornieren</v-btn
           >
         </div>
@@ -33,10 +29,22 @@
 </template>
 <script lang="ts" setup>
 import { useBookingStore } from "@/data/store/BookingStore";
+import { useEntityStore } from "@/data/store/entity/EntityStore";
 import moment from "moment";
+import { ref, onMounted } from "vue";
 
 const props = defineProps(["booking", "overdue"]);
 const bookingStore = useBookingStore();
+
+const imageSrc = ref("");
+
+onMounted(getImageForEntity);
+
+async function getImageForEntity() {
+  imageSrc.value = await useEntityStore().getImageForEntity(
+    props.booking?.bookingEntity?.id
+  );
+}
 
 function isActive() {
   return new Date(props.booking.startDate) <= new Date();
@@ -104,5 +112,9 @@ function getEntityType(): string {
   display: flex;
   justify-content: end;
   z-index: 20;
+}
+
+.button-width {
+  width: 100% !important;
 }
 </style>

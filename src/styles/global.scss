@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 $primary-color: #ff8200;
+$secondary-color: #1e1c1b;
 
 .main {
     background-color: #F6F4F1;
@@ -7,21 +8,29 @@ $primary-color: #ff8200;
 }
 
 .title {
-    color: #1e1c1b;
+    color:$secondary-color;
     font-size: 32px;
 }
 
 .subtitle {
-    color: #1e1c1b;
+    color:$secondary-color;
     font-size: 24px;
 }
 
 .title-bold {
-    color: #1e1c1b;
+    color: $secondary-color;
     font-size: 32px;
     font-weight: 600;
 }
 
 .primary-button {
-    background-color: $primary-color !important
+    background-color: $primary-color !important;
+    width: 40% !important;
+}
+
+.dialog {
+    width: 40vw;
+    max-width: 60vw;
+    height: 100% !important;
+    max-height: 75vh !important;
 }
