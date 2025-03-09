@@ -1,5 +1,5 @@
 <template>
-  <div class="ma-2 d-flex flex-row">
+  <div class="d-flex flex-row">
     <v-btn @click="$emit('confirm')" class="book-button">
       {{ props.confirmButtonTitle }}</v-btn
     >

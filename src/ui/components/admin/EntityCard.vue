@@ -47,7 +47,7 @@ function openEditModal() {
 </script>
 <style scoped>
 .card {
-  width: 27vw;
+  width: 28vw;
   height: 22vh;
   max-height: 27vh;
   margin-top: 16px;

@@ -1,91 +1,66 @@
 <template>
-  <v-card class="card">
-    <div class="d-flex flex-column">
-      <p class="title">{{ selectedEntityForEdit?.name }} bearbeiten</p>
-      <hr class="divider" />
-      <div class="d-flex flex-row mx-4">
-        <div class="d-flex flex-column mr-5 w-50">
-          <v-img height="80%" width="80%" :src="imageSrc"></v-img>
-          <ActionButtons
-            confirm-button-title="Hochladen"
-            cancel-button-title="Entfernen"
-            @confirm="persistNewImage()"
-            @cancel="removeImage()"
-          />
-        </div>
-        <div class="d-flex flex-column px-4 py-10">
-          <v-text-field
-            class="w-100"
-            label="Name"
-            bg-color="#F6F4F1"
-            :model-value="title"
-          ></v-text-field>
-          <v-text-field
-            label="Typ"
-            bg-color="#F6F4F1"
-            :model-value="type"
-          ></v-text-field>
-          <v-text-field
-            v-if="typeIsNotConsole()"
-            label="Konsolen-Typ"
-            bg-color="#F6F4F1"
-            :model-value="consoleType"
-          ></v-text-field>
-          <v-textarea
-            label="Beschreibung"
-            bg-color="#F6F4F1"
-            :model-value="description"
-          ></v-textarea>
-        </div>
-      </div>
-      <hr class="divider" />
-      <ActionButtons
-        confirm-button-title="Bestätigen"
-        @confirm="persistEntity()"
-        @cancel="closeEditEntityModal()"
-      />
-    </div>
-  </v-card>
+  <AdminEntityModal
+    :title="selectedEntityForEdit?.name + ' bearbeiten'"
+    confirm-button-title="Bestätigen"
+    @confirm="persistEntity()"
+    @cancel="closeEditEntityModal()"
+    v-model="selectedFile"
+  >
+    <v-text-field
+      class="w-100"
+      label="Name"
+      bg-color="#F6F4F1"
+      :model-value="title"
+    ></v-text-field>
+    <v-text-field
+      v-if="typeIsNotConsole()"
+      label="Konsolen-Typ"
+      bg-color="#F6F4F1"
+      :model-value="consoleType"
+    ></v-text-field>
+    <v-textarea
+      label="Beschreibung"
+      bg-color="#F6F4F1"
+      :model-value="description"
+    ></v-textarea>
+  </AdminEntityModal>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
-import ActionButtons from "@/ui/components/base/modal/ActionButtons.vue";
+import { ref } from "vue";
 import { useEntityStore } from "@/data/store/entity/EntityStore";
 import { storeToRefs } from "pinia";
+import AdminEntityModal from "./AdminBaseModal.vue";
 
 const { selectedEntityForEdit } = storeToRefs(useEntityStore());
-const imageSrc = ref("");
 const title = ref(selectedEntityForEdit.value?.name);
-const type = ref(selectedEntityForEdit.value?.type);
-const consoleType = ref(selectedEntityForEdit.value?.consoleType || null);
-const description = ref(selectedEntityForEdit.value?.description);
-
-async function getImageForEntity() {
-  if (selectedEntityForEdit.value?.id) {
-    imageSrc.value = await useEntityStore().getImageForEntity(
-      selectedEntityForEdit.value.id
-    );
-  }
-}
+const type = ref(selectedEntityForEdit.value!.type);
+const consoleType = ref(selectedEntityForEdit.value!.consoleType || null);
+const description = ref(selectedEntityForEdit.value!.description);
+const selectedFile = ref<File | null>(null);
 
 function typeIsNotConsole() {
   return selectedEntityForEdit.value?.type === "console";
 }
 
-function removeImage() {}
-
-function persistNewImage() {}
-
-function persistEntity() {}
+// TODO: Find a better solution
+async function persistEntity() {
+  useEntityStore().updateEntity(
+    selectedEntityForEdit.value?.id as number,
+    title.value as string,
+    type.value as string,
+    description.value as string,
+    consoleType.value as string
+  );
+  if (selectedFile.value && selectedEntityForEdit.value?.id) {
+    await useEntityStore().uploadImageForEntity(selectedEntityForEdit.value.id, selectedFile.value);
+  }
+  closeEditEntityModal();
+}
 
 function closeEditEntityModal() {
   selectedEntityForEdit.value = null;
   useEntityStore().triggerEditEntityModuleActive();
 }
-
-onMounted(() => {
-  getImageForEntity();
-});
 </script>
 <style scoped>
 .card::-webkit-scrollbar {
