@@ -1,3 +1,3 @@
 export interface Accessory extends BookingEntity {
-    consoleType: string
+    consoleType: String
 }

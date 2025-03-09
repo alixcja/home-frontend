@@ -1,12 +1,3 @@
-interface BookingEntity {
-  id: number;
-  name: string;
-  description: string;
-  type: string;
-  isArchived: boolean;
-  addedOn: Date;
-}
-
 interface Booking {
   id: number,
   userId: string;
