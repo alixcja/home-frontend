@@ -22,7 +22,7 @@
             class="admin-action-buttons"
           />
         </div>
-        <div class="d-flex flex-column px-4 py-10">
+        <div class="d-flex flex-column pl-6 w-100">
           <slot></slot>
         </div>
       </div>
@@ -87,6 +87,7 @@ onMounted(() => {
 <style scoped>
 .image-preview {
   width: 40% !important;
+  align-self: start;
 }
 .card::-webkit-scrollbar {
   display: none;

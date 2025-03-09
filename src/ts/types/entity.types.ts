@@ -1,8 +1,8 @@
 interface BookingEntity {
   id: number;
-  name: String;
-  description: String;
-  type: String;
-  isArchived: String;
-  addedOn: String;
+  name: string;
+  description: string;
+  type: string;
+  isArchived: string;
+  addedOn: string;
 }

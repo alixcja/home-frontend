@@ -11,7 +11,7 @@
     </div>
     <div class="d-flex flex-row">
       <EntityTab />
-      <v-spacer /> 
+      <v-spacer />
       <AddEntityButton />
     </div>
     <div class="d-flex flex-wrap">
@@ -27,11 +27,12 @@ import { onMounted } from "vue";
 import { useEntityStore } from "@/data/store/entity/EntityStore";
 import { storeToRefs } from "pinia";
 import EntityCard from "@/ui/components/admin/EntityCard.vue";
-import EditEntityModal from "@/ui/components/admin/EditEntityModal.vue";
-import AddEntityModal from "../components/admin/AddEntityModal.vue";
+import EditEntityModal from "@/ui/components/admin/modals/EditEntityModal.vue";
+import AddEntityModal from "../components/admin/modals/AddEntityModal.vue";
 import AddEntityButton from "../components/admin/AddEntityButton.vue";
 
-const { isEditEntityModuleActive, isAddEntityModuleActive } = storeToRefs(useEntityStore());
+const { isEditEntityModuleActive, isAddEntityModuleActive } =
+  storeToRefs(useEntityStore());
 const { allEntities } = storeToRefs(useEntityStore());
 
 onMounted(() => {

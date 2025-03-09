@@ -6,49 +6,46 @@
     @cancel="closeAddEntityModal()"
     v-model="selectedFile"
   >
-    <div class="d-flex flex-column px-4 py-10">
-      <v-autocomplete
-        class="w-100"
-        label="Typ"
-        bg-color="#F6F4F1"
-        :items="getAllEntityTypes()"
-        v-model="type"
-      ></v-autocomplete>
-      <div v-if="type">
-        <v-text-field
-          class="w-100"
-          label="Name"
-          bg-color="#F6F4F1"
-          v-model="name"
-        ></v-text-field>
-        <v-text-field
-          v-if="!typeIsNotConsole()"
-          label="Konsolen-Typ"
-          bg-color="#F6F4F1"
+    <div class="d-flex flex-column">
+      <ConsoleTypeInputField
+        :all-types="getAllEntityTypes()"
+        v-model="typeString"
+      ></ConsoleTypeInputField>
+      <div v-show="type">
+        <NameInputField v-model="name" />
+        <ConsoleTypeInputField
+          v-if="typeIsNotConsole()"
           v-model="consoleType"
-        ></v-text-field>
-        <v-textarea
-          label="Beschreibung"
-          bg-color="#F6F4F1"
-          v-model="description"
-        ></v-textarea>
+        />
+        <DescriptionInputField v-model="description" />
       </div>
     </div>
   </AdminEntityModal>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useEntityStore } from "@/data/store/entity/EntityStore";
 import { storeToRefs } from "pinia";
-import AdminEntityModal from "./AdminBaseModal.vue";
+import { BookingEntityType } from "@/ts/entitytypes";
+import AdminEntityModal from "../modals/AdminBaseModal.vue";
+import NameInputField from "./inputfields/NameInputField.vue";
+import ConsoleTypeInputField from "./inputfields/ConsoleTypeInputField.vue";
+import DescriptionInputField from "./inputfields/DescriptionInputField.vue";
 
 const { selectedEntityForEdit } = storeToRefs(useEntityStore());
-const imageSrc = ref("");
-const name = ref("");
-const type = ref("");
-const consoleType = ref("");
-const description = ref("");
+const imageSrc = ref<string | undefined>(undefined);
+const name = ref<string | undefined>(undefined);
+const type = ref<BookingEntityType | undefined>(undefined);
+const consoleType = ref<string | undefined>(undefined);
+const description = ref<string | undefined>(undefined);
 const selectedFile = ref<File | null>(null);
+
+const typeString = computed({
+  get: () => (type.value ? type.value.toString() : undefined),
+  set: (val: string | undefined) => {
+    type.value = val as unknown as BookingEntityType;
+  },
+});
 
 async function getImageForEntity() {
   if (selectedEntityForEdit.value?.id) {
@@ -59,23 +56,22 @@ async function getImageForEntity() {
 }
 
 function typeIsNotConsole() {
-  return selectedEntityForEdit.value?.type === "console";
+  return type.value !== BookingEntityType.Console;
 }
 
 function getAllEntityTypes() {
-  return ["game", "console", "accessory"];
+  return Object.values(BookingEntityType);
 }
 
 async function persistEntity() {
   const id: number | null = await useEntityStore().persistEntity(
-    name.value,
-    description.value,
-    type.value,
-    consoleType.value
+    name.value!,
+    type.value!,
+    consoleType.value,
+    description.value
   );
-  debugger
   if (selectedFile.value && id) {
-    await useEntityStore().uploadImageForEntity(id);
+    await useEntityStore().uploadImageForEntity(id, selectedFile.value);
   }
   closeAddEntityModal();
 }

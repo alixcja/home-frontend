@@ -62,9 +62,9 @@ export const useEntityStore = defineStore("entity", {
       return URL.createObjectURL(response.data);
     },
     async uploadImageForEntity(id: number, image: File) {
-      const formData = new FormData()
+      const formData = new FormData();
 
-      formData.append('file', image)
+      formData.append("file", image);
 
       await axiosInstance.put(
         `${import.meta.env.VITE_BACKEND_URL}/entities/${id}/image`,
@@ -83,23 +83,23 @@ export const useEntityStore = defineStore("entity", {
     },
 
     async persistEntity(
-      name: string,
-      description: string,
-      type: string,
-      consoleType?: string
+      name: string, // ✅ Change to 'string'
+      type: BookingEntityType,
+      consoleType?: string, // ✅ Change to 'string'
+      description?: string // ✅ Change to 'string'
     ): Promise<number | null> {
-      if (type === "game") {
+      if (type === BookingEntityType.Game) {
         return this.persistGame(name, description, consoleType);
-      } else if (type === "console") {
+      } else if (type === BookingEntityType.Console) {
         return this.persistConsole(name, description);
       } else {
         return this.persistAccessory(name, description, consoleType);
       }
     },
     persistGame(
-      name: string,
-      description: string,
-      consoleType?: string
+      name: String,
+      description?: String,
+      consoleType?: String
     ): number | null {
       const game: Partial<Game> = {
         name,
@@ -113,7 +113,7 @@ export const useEntityStore = defineStore("entity", {
         });
       return null;
     },
-    persistConsole(name: string, description: string): number | null {
+    persistConsole(name: String, description?: String): number | null {
       const console: Partial<Game> = {
         name,
         description,
@@ -126,9 +126,9 @@ export const useEntityStore = defineStore("entity", {
       return null;
     },
     persistAccessory(
-      name: string,
-      description: string,
-      consoleType?: string
+      name: String,
+      description?: String,
+      consoleType?: String
     ): number | null {
       const consoleAccessory: Partial<Accessory> = {
         name,
@@ -145,16 +145,17 @@ export const useEntityStore = defineStore("entity", {
         });
       return null;
     },
+
     async updateEntity(
       id: number,
-      name: string,
-      type: string,
-      description: string,
-      consoleType?: string
+      name: String,
+      type: BookingEntityType,
+      description: String,
+      consoleType?: String
     ) {
-      if (type === "game") {
+      if (type === BookingEntityType.Game) {
         this.updateGame(id, name, description, consoleType);
-      } else if (type === "console") {
+      } else if (type === BookingEntityType.Console) {
         this.updateConsole(id, name, description);
       } else {
         this.updateAccessory(id, name, description, consoleType);
@@ -162,9 +163,9 @@ export const useEntityStore = defineStore("entity", {
     },
     updateGame(
       id: number,
-      name: string,
-      description: string,
-      consoleType?: string
+      name: String,
+      description: String,
+      consoleType?: String
     ) {
       const game: Partial<Game> = {
         name,
@@ -177,7 +178,7 @@ export const useEntityStore = defineStore("entity", {
         game
       );
     },
-    updateConsole(id: number, name: string, description: string) {
+    updateConsole(id: number, name: String, description: String) {
       const console: Partial<Game> = {
         name,
         type: "console",
@@ -190,9 +191,9 @@ export const useEntityStore = defineStore("entity", {
     },
     updateAccessory(
       id: number,
-      name: string,
-      description: string,
-      consoleType?: string
+      name: String,
+      description: String,
+      consoleType?: String
     ) {
       const consoleAccessory: Partial<Accessory> = {
         name,

@@ -36,7 +36,10 @@ $secondary-color: #1e1c1b;
 }
 
 .adminDialog {
-    width: 50vw;
+    width: 45vw;
     height: 100% !important;
     max-height: 75vh !important;
+}
+.one-liner-text-field {
+    height: 16px;
 }

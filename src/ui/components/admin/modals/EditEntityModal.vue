@@ -6,23 +6,9 @@
     @cancel="closeEditEntityModal()"
     v-model="selectedFile"
   >
-    <v-text-field
-      class="w-100"
-      label="Name"
-      bg-color="#F6F4F1"
-      :model-value="title"
-    ></v-text-field>
-    <v-text-field
-      v-if="typeIsNotConsole()"
-      label="Konsolen-Typ"
-      bg-color="#F6F4F1"
-      :model-value="consoleType"
-    ></v-text-field>
-    <v-textarea
-      label="Beschreibung"
-      bg-color="#F6F4F1"
-      :model-value="description"
-    ></v-textarea>
+    <NameInputField v-model="name" />
+    <ConsoleTypeInputField v-if="typeIsNotConsole()" v-model="consoleType" />
+    <DescriptionInputField v-model="description" />
   </AdminEntityModal>
 </template>
 <script lang="ts" setup>
@@ -30,36 +16,42 @@ import { ref } from "vue";
 import { useEntityStore } from "@/data/store/entity/EntityStore";
 import { storeToRefs } from "pinia";
 import AdminEntityModal from "./AdminBaseModal.vue";
+import NameInputField from "./inputfields/NameInputField.vue";
+import ConsoleTypeInputField from "./inputfields/ConsoleTypeInputField.vue";
+import DescriptionInputField from "./inputfields/DescriptionInputField.vue";
 
 const { selectedEntityForEdit } = storeToRefs(useEntityStore());
-const title = ref(selectedEntityForEdit.value?.name);
+const name = ref<string | undefined>(selectedEntityForEdit.value?.name);
 const type = ref(selectedEntityForEdit.value!.type);
-const consoleType = ref(selectedEntityForEdit.value!.consoleType || null);
-const description = ref(selectedEntityForEdit.value!.description);
+const consoleType = ref<string | undefined>(selectedEntityForEdit.value!.consoleType || undefined);
+const description = ref<string | undefined>(selectedEntityForEdit.value!.description);
 const selectedFile = ref<File | null>(null);
 
 function typeIsNotConsole() {
-  return selectedEntityForEdit.value?.type === "console";
+  return selectedEntityForEdit.value?.type !== "console";
 }
 
 // TODO: Find a better solution
 async function persistEntity() {
   useEntityStore().updateEntity(
     selectedEntityForEdit.value?.id as number,
-    title.value as string,
-    type.value as string,
+    name.value as string,
+    type.value,
     description.value as string,
     consoleType.value as string
   );
   if (selectedFile.value && selectedEntityForEdit.value?.id) {
-    await useEntityStore().uploadImageForEntity(selectedEntityForEdit.value.id, selectedFile.value);
+    await useEntityStore().uploadImageForEntity(
+      selectedEntityForEdit.value.id,
+      selectedFile.value
+    );
   }
   closeEditEntityModal();
 }
 
 function closeEditEntityModal() {
-  selectedEntityForEdit.value = null;
   useEntityStore().triggerEditEntityModuleActive();
+  selectedEntityForEdit.value = null;
 }
 </script>
 <style scoped>
