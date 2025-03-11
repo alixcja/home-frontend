@@ -6,6 +6,18 @@
     @cancel="closeEditEntityModal()"
     v-model="selectedFile"
   >
+    <div class="d-flex justify-end pb-2">
+      <ActionButton
+        v-if="selectedEntityForEdit?.isArchived"
+        button-text="Wiederherstellen"
+        @action="unarchiveEntity()"
+      />
+      <ActionButton
+        v-else
+        button-text="Archivieren"
+        @action="archiveEntity()"
+      />
+    </div>
     <NameInputField v-model="name" />
     <ConsoleTypeInputField v-if="typeIsNotConsole()" v-model="consoleType" />
     <DescriptionInputField v-model="description" />
@@ -19,16 +31,29 @@ import AdminEntityModal from "./AdminBaseModal.vue";
 import NameInputField from "./inputfields/NameInputField.vue";
 import ConsoleTypeInputField from "./inputfields/ConsoleTypeInputField.vue";
 import DescriptionInputField from "./inputfields/DescriptionInputField.vue";
+import ActionButton from "../ActionButton.vue";
 
 const { selectedEntityForEdit } = storeToRefs(useEntityStore());
 const name = ref<string | undefined>(selectedEntityForEdit.value?.name);
 const type = ref(selectedEntityForEdit.value!.type);
-const consoleType = ref<string | undefined>(selectedEntityForEdit.value!.consoleType || undefined);
-const description = ref<string | undefined>(selectedEntityForEdit.value!.description);
+const consoleType = ref<string | undefined>(
+  selectedEntityForEdit.value!.consoleType || undefined
+);
+const description = ref<string | undefined>(
+  selectedEntityForEdit.value!.description
+);
 const selectedFile = ref<File | null>(null);
 
 function typeIsNotConsole() {
   return selectedEntityForEdit.value?.type !== "console";
+}
+
+function archiveEntity() {
+  useEntityStore().archiveEntity(selectedEntityForEdit?.value?.id!);
+}
+
+function unarchiveEntity() {
+  useEntityStore().unarchiveEntity(selectedEntityForEdit?.value?.id!);
 }
 
 // TODO: Find a better solution

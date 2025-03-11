@@ -7,14 +7,18 @@
       <div class="d-flex flex-column">
         <div class="ma-4">
           <h3>{{ props.entity.name }}</h3>
+          <h5 v-if="props.entity.isArchived">Archiviert</h5>
+          <h5 v-else>Nicht archviert</h5>
           <!--  <p class="mt-2">
             {{ description() }}
           </p> -->
         </div>
         <div width="100%" class="mt-2 action-button">
-          <v-btn @click="openEditModal()" class="button-width primary-button"
-            >Bearbeiten</v-btn
-          >
+          <ActionButton
+            button-text="Bearbeiten"
+            @action="openEditModal()"
+            class="button-width primary-button"
+          />
         </div>
       </div>
     </div>
@@ -23,6 +27,7 @@
 <script lang="ts" setup>
 import { useEntityStore } from "@/data/store/entity/EntityStore";
 import { storeToRefs } from "pinia";
+import ActionButton from "./ActionButton.vue";
 /*   import moment from "moment";
  */ import { ref, onMounted } from "vue";
 

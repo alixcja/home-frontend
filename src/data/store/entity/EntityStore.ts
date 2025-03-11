@@ -206,5 +206,17 @@ export const useEntityStore = defineStore("entity", {
         consoleAccessory
       );
     },
+
+    archiveEntity(id: number) {
+      axiosInstance.put(
+        `${import.meta.env.VITE_BACKEND_URL}/entities/${id}/archive`
+      );
+    },
+
+    unarchiveEntity(id: number) {
+      axiosInstance.put(
+        `${import.meta.env.VITE_BACKEND_URL}/entities/${id}/unarchive`
+      );
+    },
   },
 });
