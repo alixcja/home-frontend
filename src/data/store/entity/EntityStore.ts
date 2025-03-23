@@ -4,6 +4,7 @@ import { Console } from "../../../ts/types/console.types";
 import { Accessory } from "../../../ts/types/accessory.types";
 import axiosInstance from "@/data/api/axios";
 import { AxiosResponse } from "axios";
+import { BookingEntityType } from "@/ts/entitytypes.enums";
 
 export const useEntityStore = defineStore("entity", {
   state: () => ({
@@ -97,14 +98,15 @@ export const useEntityStore = defineStore("entity", {
       }
     },
     persistGame(
-      name: String,
-      description?: String,
-      consoleType?: String
+      name: string,
+      description?: string,
+      consoleType?: string
     ): number | null {
       const game: Partial<Game> = {
         name,
         consoleType,
         description,
+        type: BookingEntityType.Game,
       };
       axiosInstance
         .post(`${import.meta.env.VITE_BACKEND_URL}/games`, game)
@@ -113,10 +115,11 @@ export const useEntityStore = defineStore("entity", {
         });
       return null;
     },
-    persistConsole(name: String, description?: String): number | null {
+    persistConsole(name: string, description?: string): number | null {
       const console: Partial<Game> = {
         name,
         description,
+        type: BookingEntityType.Console,
       };
       axiosInstance
         .post(`${import.meta.env.VITE_BACKEND_URL}/consoles`, console)
@@ -126,14 +129,15 @@ export const useEntityStore = defineStore("entity", {
       return null;
     },
     persistAccessory(
-      name: String,
-      description?: String,
-      consoleType?: String
+      name: string,
+      description?: string,
+      consoleType?: string
     ): number | null {
       const consoleAccessory: Partial<Accessory> = {
         name,
         consoleType,
         description,
+        type: BookingEntityType.Accessory,
       };
       axiosInstance
         .post(
@@ -148,10 +152,10 @@ export const useEntityStore = defineStore("entity", {
 
     async updateEntity(
       id: number,
-      name: String,
+      name: string,
       type: BookingEntityType,
-      description: String,
-      consoleType?: String
+      description: string,
+      consoleType?: string
     ) {
       if (type === BookingEntityType.Game) {
         this.updateGame(id, name, description, consoleType);
@@ -163,9 +167,9 @@ export const useEntityStore = defineStore("entity", {
     },
     updateGame(
       id: number,
-      name: String,
-      description: String,
-      consoleType?: String
+      name: string,
+      description: string,
+      consoleType?: string
     ) {
       const game: Partial<Game> = {
         name,
@@ -178,7 +182,7 @@ export const useEntityStore = defineStore("entity", {
         game
       );
     },
-    updateConsole(id: number, name: String, description: String) {
+    updateConsole(id: number, name: string, description: string) {
       const console: Partial<Game> = {
         name,
         type: "console",
@@ -191,9 +195,9 @@ export const useEntityStore = defineStore("entity", {
     },
     updateAccessory(
       id: number,
-      name: String,
-      description: String,
-      consoleType?: String
+      name: string,
+      description: string,
+      consoleType?: string
     ) {
       const consoleAccessory: Partial<Accessory> = {
         name,

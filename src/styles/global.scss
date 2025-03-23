@@ -12,16 +12,17 @@ $secondary-color: #1e1c1b;
     font-size: 32px;
 }
 
+.title-bold {
+    @extend .title;
+    font-weight: 600;
+}
+
 .subtitle {
     color:$secondary-color;
     font-size: 24px;
 }
 
-.title-bold {
-    color: $secondary-color;
-    font-size: 32px;
-    font-weight: 600;
-}
+
 
 .primary-button {
     background-color: $primary-color !important;
@@ -42,4 +43,8 @@ $secondary-color: #1e1c1b;
 }
 .one-liner-text-field {
     height: 16px;
+}
+
+.text {
+    font-size: 16px;
 }
