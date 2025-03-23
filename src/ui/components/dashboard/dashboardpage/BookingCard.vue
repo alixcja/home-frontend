@@ -1,7 +1,7 @@
 <template>
   <v-card class="card elevation-24 rounded-xl">
     <div class="d-flex flex-row">
-      <v-img height="100%" width="40%" :src="imageSrc"></v-img>
+      <v-img :cover="true" width="40%" aspect-ratio="1" :src="imageSrc"></v-img>
       <div class="d-flex flex-column">
         <div class="ma-4">
           <h3>{{ props.booking.bookingEntity.name }}</h3>
@@ -55,7 +55,6 @@ function formatDate(date: Date) {
 }
 
 function openReturnModal() {
-  console.log(props.booking);
   useBookingStore().setBookingToReturn(props.booking);
   bookingStore.triggerReturnBookingModule();
 }

@@ -1,8 +1,14 @@
 <template>
   <v-card class="card elevation-24 rounded-xl">
     <div class="d-flex flex-row">
-      <div class="w-50">
-        <v-img :src="imageSrc"></v-img>
+      <div class="w-33">
+        <v-img
+          :src="imageSrc"
+          :cover="true"
+          aspect-ratio="1"
+          height="100%"
+          width="100%"
+        ></v-img>
       </div>
       <div class="d-flex flex-column">
         <div class="ma-4">
@@ -26,23 +32,17 @@
 </template>
 <script lang="ts" setup>
 import { useEntityStore } from "@/data/store/entity/EntityStore";
-import { storeToRefs } from "pinia";
 import ActionButton from "./ActionButton.vue";
 /*   import moment from "moment";
  */ import { ref, onMounted } from "vue";
 
 const props = defineProps(["entity"]);
-const selectedEntityForEdit = storeToRefs(useEntityStore());
 const imageSrc = ref("");
 
 onMounted(getImageForEntity);
 
 async function getImageForEntity() {
   imageSrc.value = await useEntityStore().getImageForEntity(props.entity?.id);
-}
-
-function formatDate(date: Date) {
-  return moment(String(date)).format("DD.MM.YYYY");
 }
 
 function openEditModal() {
@@ -52,8 +52,8 @@ function openEditModal() {
 </script>
 <style scoped>
 .card {
-  width: 28vw;
-  height: 22vh;
+  width: 22vw;
+  height: 18vh;
   max-height: 27vh;
   margin-top: 16px;
   margin-bottom: 16px;
@@ -68,10 +68,7 @@ function openEditModal() {
   justify-content: end;
   z-index: 20;
 }
-.image {
-  width: 175px !important;
-  height: 175px !important;
-}
+
 .button-width {
   width: 80% !important;
 }

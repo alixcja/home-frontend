@@ -7,10 +7,10 @@
     v-model="selectedFile"
   >
     <div class="d-flex flex-column">
-      <ConsoleTypeInputField
+      <TypeInputField
         :all-types="getAllEntityTypes()"
         v-model="typeString"
-      ></ConsoleTypeInputField>
+      ></TypeInputField>
       <div v-show="type">
         <NameInputField v-model="name" />
         <ConsoleTypeInputField
@@ -26,10 +26,11 @@
 import { computed, onMounted, ref } from "vue";
 import { useEntityStore } from "@/data/store/entity/EntityStore";
 import { storeToRefs } from "pinia";
-import { BookingEntityType } from "@/ts/entitytypes";
+import { BookingEntityType } from "@/ts/entitytypes.enums";
 import AdminEntityModal from "../modals/AdminBaseModal.vue";
 import NameInputField from "./inputfields/NameInputField.vue";
 import ConsoleTypeInputField from "./inputfields/ConsoleTypeInputField.vue";
+import TypeInputField from "./inputfields/TypeInputField.vue";
 import DescriptionInputField from "./inputfields/DescriptionInputField.vue";
 
 const { selectedEntityForEdit } = storeToRefs(useEntityStore());
@@ -119,3 +120,4 @@ onMounted(() => {
   align-self: center;
 }
 </style>
+@/ts/entity.types

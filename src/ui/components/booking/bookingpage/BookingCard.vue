@@ -13,6 +13,8 @@
       <v-img
         width="100%"
         :src="imageSrc"
+        :cover="true"
+        aspect-ratio="1"
       ></v-img>
       <div class="px-2 py-2">
         <b class="selected">{{ props.entity.name }}</b>
