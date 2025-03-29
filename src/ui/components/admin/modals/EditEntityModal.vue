@@ -50,10 +50,12 @@ function typeIsNotConsole() {
 
 function archiveEntity() {
   useEntityStore().archiveEntity(selectedEntityForEdit?.value?.id!);
+  useEntityStore().getAllEntites();
 }
 
 function unarchiveEntity() {
   useEntityStore().unarchiveEntity(selectedEntityForEdit?.value?.id!);
+  useEntityStore().getAllEntites();
 }
 
 // TODO: Find a better solution
@@ -72,11 +74,14 @@ async function persistEntity() {
     );
   }
   closeEditEntityModal();
+  useEntityStore().getAllEntites();
 }
 
 function closeEditEntityModal() {
   useEntityStore().triggerEditEntityModuleActive();
   selectedEntityForEdit.value = null;
+  useEntityStore().getAllEntites();
+
 }
 </script>
 <style scoped>

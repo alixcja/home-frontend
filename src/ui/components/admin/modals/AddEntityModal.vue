@@ -75,6 +75,7 @@ async function persistEntity() {
     await useEntityStore().uploadImageForEntity(id, selectedFile.value);
   }
   closeAddEntityModal();
+  useEntityStore().getAllEntites();
 }
 
 function closeAddEntityModal() {
