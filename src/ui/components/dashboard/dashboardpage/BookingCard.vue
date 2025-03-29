@@ -18,7 +18,7 @@
           >
           <v-btn
             v-else
-            @click="openReturnModal"
+            @click="openCancelModal"
             class="primary-button button-width"
             >Stornieren</v-btn
           >
@@ -57,6 +57,13 @@ function formatDate(date: Date) {
 function openReturnModal() {
   useBookingStore().setBookingToReturn(props.booking);
   bookingStore.triggerReturnBookingModule();
+}
+
+
+function openCancelModal() {
+  console.log(props.booking)
+  useBookingStore().setBookingToCancel(props.booking);
+  bookingStore.triggerCancelBookingModal();
 }
 
 function description() {

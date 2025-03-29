@@ -19,6 +19,7 @@ const { bookingToReturn } = storeToRefs(useBookingStore());
 
 function toggleReturnBookingModule() {
   bookingStore.triggerReturnBookingModule();
+  bookingToReturn.value = null;
 }
 
 function returnBooking() {

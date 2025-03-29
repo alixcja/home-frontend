@@ -5,17 +5,22 @@ export const useBookingStore = defineStore("booking", {
   state: () => ({
     isBookingModuleActive: false,
     isReturnBookingModuleActive: false,
+    isCancelBookingModalActive: false,
     selectedEntitiesForBooking: [] as BookingEntity[],
     currentBookings: [] as Booking[],
     overdueBookings: [] as Booking[],
     hasCurrentOrFutureBookings: false,
     hasBookingsOverdue: false,
-    bookingToReturn: {} as Booking,
+    bookingToReturn: {} as Booking | null,
+    bookingToCancel: {} as Booking | null,
   }),
   getters: {},
   actions: {
     triggerBookingModule() {
       this.isBookingModuleActive = !this.isBookingModuleActive;
+    },
+    triggerCancelBookingModal() {
+      this.isCancelBookingModalActive = !this.isCancelBookingModalActive;
     },
     triggerReturnBookingModule() {
       this.isReturnBookingModuleActive = !this.isReturnBookingModuleActive;
@@ -34,6 +39,11 @@ export const useBookingStore = defineStore("booking", {
 
     setBookingToReturn(booking: Booking) {
       this.bookingToReturn = booking;
+    },
+    
+    setBookingToCancel(booking: Booking) {
+      console.log(booking)
+      this.bookingToCancel = booking;
     },
 
     fetchAllBookings() {
@@ -106,6 +116,11 @@ export const useBookingStore = defineStore("booking", {
         axiosInstance
         .put(`${import.meta.env.VITE_BACKEND_URL}/bookings/return/${this.bookingToReturn.id}`);
       }
+    },
+
+    cancelBooking() {
+      axiosInstance
+        .put(`${import.meta.env.VITE_BACKEND_URL}/bookings/cancel/${this.bookingToCancel.id}`);
     }
   },
 });
