@@ -40,6 +40,8 @@ const disableAllDatesBeforeNow = computed(() => {
   return (val: Date) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const todayInSevenDays = new Date();
+    todayInSevenDays.setDate(todayInSevenDays.getDate() + 7);
     const currentDate = new Date(val);
     currentDate.setHours(0, 0, 0, 0);
     return currentDate >= today;

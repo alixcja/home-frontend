@@ -5,6 +5,7 @@ import { Accessory } from "../../../ts/types/accessory.types";
 import axiosInstance from "@/data/api/axios";
 import { AxiosResponse } from "axios";
 import { BookingEntityType } from "@/ts/entitytypes.enums";
+import { useToast } from "vue-toastification";
 
 export const useEntityStore = defineStore("entity", {
   state: () => ({
@@ -111,6 +112,10 @@ export const useEntityStore = defineStore("entity", {
       axiosInstance
         .post(`${import.meta.env.VITE_BACKEND_URL}/games`, game)
         .then((response: AxiosResponse) => {
+          const toast = useToast();
+          toast.success(
+            `Spiel ${response.data.name} wurde erfolgreich erstellt`
+          );
           return response.data();
         });
       return null;
@@ -124,6 +129,10 @@ export const useEntityStore = defineStore("entity", {
       axiosInstance
         .post(`${import.meta.env.VITE_BACKEND_URL}/consoles`, console)
         .then((response: AxiosResponse) => {
+          const toast = useToast();
+          toast.success(
+            `Konsole ${response.data.name} wurde erfolgreich erstellt`
+          );
           return response.data();
         });
       return null;
@@ -145,6 +154,10 @@ export const useEntityStore = defineStore("entity", {
           consoleAccessory
         )
         .then((response: AxiosResponse) => {
+          const toast = useToast();
+          toast.success(
+            `Konsolenzubehör ${response.data.name} wurde erfolgreich erstellt`
+          );
           return response.data();
         });
       return null;
@@ -177,10 +190,12 @@ export const useEntityStore = defineStore("entity", {
         type: "game",
         description,
       };
-      axiosInstance.put(
-        `${import.meta.env.VITE_BACKEND_URL}/games/${id}`,
-        game
-      );
+      axiosInstance
+        .put(`${import.meta.env.VITE_BACKEND_URL}/games/${id}`, game)
+        .then(() => {
+          const toast = useToast();
+          toast.success(`Spiel wurde erfolgreich aktualisisert`);
+        });
     },
     updateConsole(id: number, name: string, description: string) {
       const console: Partial<Game> = {
@@ -188,10 +203,12 @@ export const useEntityStore = defineStore("entity", {
         type: "console",
         description,
       };
-      axiosInstance.put(
-        `${import.meta.env.VITE_BACKEND_URL}/consoles/${id}`,
-        console
-      );
+      axiosInstance
+        .put(`${import.meta.env.VITE_BACKEND_URL}/consoles/${id}`, console)
+        .then(() => {
+          const toast = useToast();
+          toast.success(`Konsole wurde erfolgreich aktualisisert`);
+        });
     },
     updateAccessory(
       id: number,
@@ -205,22 +222,33 @@ export const useEntityStore = defineStore("entity", {
         type: "accessory",
         description,
       };
-      axiosInstance.put(
-        `${import.meta.env.VITE_BACKEND_URL}/accessories/${id}`,
-        consoleAccessory
-      );
+      axiosInstance
+        .put(
+          `${import.meta.env.VITE_BACKEND_URL}/accessories/${id}`,
+          consoleAccessory
+        )
+        .then(() => {
+          const toast = useToast();
+          toast.success(`Konsolenzubehör wurde erfolgreich aktualisisert`);
+        });
     },
 
     archiveEntity(id: number) {
-      axiosInstance.put(
-        `${import.meta.env.VITE_BACKEND_URL}/entities/${id}/archive`
-      );
+      axiosInstance
+        .put(`${import.meta.env.VITE_BACKEND_URL}/entities/${id}/archive`)
+        .then(() => {
+          const toast = useToast();
+          toast.success(`Entity wurde erfolgreich archiviert`);
+        });
     },
 
     unarchiveEntity(id: number) {
-      axiosInstance.put(
-        `${import.meta.env.VITE_BACKEND_URL}/entities/${id}/unarchive`
-      );
+      axiosInstance
+        .put(`${import.meta.env.VITE_BACKEND_URL}/entities/${id}/unarchive`)
+        .then(() => {
+          const toast = useToast();
+          toast.success(`Entity wurde erfolgreich unarchiviert (????)`);
+        });
     },
   },
 });

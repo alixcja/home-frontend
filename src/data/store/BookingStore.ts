@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import axiosInstance from "../api/axios";
+import { useToast } from "vue-toastification";
+import { Axios, AxiosError } from "axios";
 
 export const useBookingStore = defineStore("booking", {
   state: () => ({
@@ -40,9 +42,9 @@ export const useBookingStore = defineStore("booking", {
     setBookingToReturn(booking: Booking) {
       this.bookingToReturn = booking;
     },
-    
+
     setBookingToCancel(booking: Booking) {
-      console.log(booking)
+      console.log(booking);
       this.bookingToCancel = booking;
     },
 
@@ -88,8 +90,75 @@ export const useBookingStore = defineStore("booking", {
         axiosInstance
           .post(`${import.meta.env.VITE_BACKEND_URL}/bookings`, bookings)
           .then(() => {
+            const toast = useToast();
             this.triggerBookingModule();
+            toast.success("Buchung war erfolgreich");
+          })
+          .catch((error: AxiosError) => {
+            this.throwBookingErrorToast(error);
           });
+      }
+    },
+
+    throwBookingErrorToast(error: AxiosError) {
+      const toast = useToast();
+
+      if (error.response && error.response.status === 400) {
+        this.checkAndThrowBookingLimit(error);
+        this.checkBookingDays(error);
+        const data = error.response.data;
+        this.checkBookingDates(data);
+      }
+
+      toast.error("Ein unbekannter Fehler ist aufgetreten");
+    },
+    checkBookingDays(error: AxiosError) {
+      const toast = useToast();
+
+      if (
+        error.response?.data ===
+        "Booking cannot be extended by more then 7 days"
+      ) {
+        toast.error("Buchung darf nicht mehr als sieben Tage gehen");
+      }
+    },
+
+    checkIfEntityWasNotAlreadyBookedInThisTime(error: AxiosError) {
+      const toast = useToast();
+
+      if (error.response?.data === "Booking was already booked") {
+        toast.error("Entität wurde für den Zeitraum gebucht");
+      }
+    },
+    checkBookingDates(data: unknown) {
+      const toast = useToast();
+
+      if (
+        data?.title === "Constraint Violation" &&
+        Array.isArray(data.violations)
+      ) {
+        const hasMissingDate = data.violations.some(
+          (violation) =>
+            violation.message === "Start date must be set" ||
+            violation.message === "End date must be set"
+        );
+
+        if (hasMissingDate) {
+          toast.error("Bitte gebe dein Buchungszeitraum ein");
+        }
+      }
+    },
+
+    checkAndThrowBookingLimit(error: AxiosError) {
+      const toast = useToast();
+
+      if (error.response?.data === "Booking limit has been reached") {
+        toast.error("Du darfst nicht mehr als fünf aktuelle Buchungen haben");
+      }
+      if (error.response?.data === "Booking limit would be reached") {
+        toast.error(
+          "Du würdest mit dieser Buchung das Buchungslimit von fünf überschreiben"
+        );
       }
     },
 
@@ -98,10 +167,9 @@ export const useBookingStore = defineStore("booking", {
       startDate: Date,
       endDate: Date
     ) {
-      let bookings:  Partial<Booking>[] = [];
+      let bookings: Partial<Booking>[] = [];
       selectedEntitiesForBooking.forEach((bookingEntity) => {
         const booking: Partial<Booking> = {
-          userId: "test-person",
           bookingEntity,
           startDate,
           endDate,
@@ -114,13 +182,25 @@ export const useBookingStore = defineStore("booking", {
     returnBooking() {
       if (this.bookingToReturn) {
         axiosInstance
-        .put(`${import.meta.env.VITE_BACKEND_URL}/bookings/return/${this.bookingToReturn.id}`);
+          .put(
+            `${import.meta.env.VITE_BACKEND_URL}/bookings/return/${this.bookingToReturn.id}`
+          )
+          .then(() => {
+            const toast = useToast();
+            toast.success("Buchung wurde erfolgreich zurückgegeben");
+          });
       }
     },
 
     cancelBooking() {
       axiosInstance
-        .put(`${import.meta.env.VITE_BACKEND_URL}/bookings/cancel/${this.bookingToCancel.id}`);
-    }
+        .put(
+          `${import.meta.env.VITE_BACKEND_URL}/bookings/cancel/${this.bookingToCancel.id}`
+        )
+        .then(() => {
+          const toast = useToast();
+          toast.success("Buchung wurde erfolgreich storniert");
+        });
+    },
   },
 });
