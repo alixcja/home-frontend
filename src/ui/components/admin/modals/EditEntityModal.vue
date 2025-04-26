@@ -80,8 +80,6 @@ async function persistEntity() {
 function closeEditEntityModal() {
   useEntityStore().triggerEditEntityModuleActive();
   selectedEntityForEdit.value = null;
-  useEntityStore().getAllEntites();
-
 }
 </script>
 <style scoped>
