@@ -35,4 +35,6 @@ onMounted(() => {
   newsStore.getAllNews()
 });
 </script>
-<style lang="sass"></style>
+<style lang="scss">
+@import "@/styles/global.scss"
+</style>
