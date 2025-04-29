@@ -21,7 +21,12 @@ const routes = [
     path: "/admin",
     component: () => import("@/ui/pages/AdminPage.vue"),
     meta: { hideHeader: false },
-  }
+  },
+  {
+    path: "/shops",
+    component: () => import("@/ui/pages/ShopPage.vue"),
+    meta: { hideHeader: false },
+  },
 ];
 
 const router = createRouter({

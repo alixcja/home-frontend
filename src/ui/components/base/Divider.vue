@@ -17,13 +17,3 @@ const props = defineProps(["entity", "isToggled"]);
 
 const iconType = computed(() => props.isToggled ? 'mdi-chevron-up' : 'mdi-chevron-down')
 </script>
-<style>
-.splitter {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: center;
-  margin-bottom: 15px;
-  margin-top: 15px;
-}
-</style>

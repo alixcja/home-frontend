@@ -30,12 +30,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import Divider from "@/ui/components/booking/bookingpage/Divider.vue";
+import Divider from "@/ui/components/base/Divider.vue";
 import { useEntityStore } from "../../data/store/entity/EntityStore";
 import { useBookingStore } from "../../data/store/BookingStore";
 import { onMounted, computed, ref, Ref } from "vue";
 import { storeToRefs } from "pinia";
-import EntityCard from "../components/booking/bookingpage/BookingCard.vue";
+import EntityCard from "../components/base/entitycard/EntityCard.vue";
 import BookButton from "../components/booking/bookingpage/BookButton.vue";
 
 let selectedForBooking: Ref<BookingEntity[]> = ref([]);

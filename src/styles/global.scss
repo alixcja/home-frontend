@@ -48,3 +48,12 @@ $secondary-color: #1e1c1b;
 .text {
     font-size: 16px;
 }
+
+.splitter {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }

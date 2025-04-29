@@ -4,11 +4,12 @@
     :redirect="'/dashboard'"
     class="mr-4"
   />
-  <HomeMenuButton :iconType="'mdi-calendar-blank'" :redirect="'/booking'" />
-  <!--   <HomeMenuButton
+  <HomeMenuButton :iconType="'mdi-calendar-blank'" :redirect="'/booking'" class="mr-4"/>
+  <HomeMenuButton
     :iconType="'mdi-silverware-fork-knife'"
-    :redirect="'/restaurant'"
-  /> -->
+    :redirect="'/shops'"
+    class="mr-4"
+  />
   <hr class="divider" />
   <HomeMenuButton
     :iconType="'mdi-account'"
