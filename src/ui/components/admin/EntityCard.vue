@@ -15,11 +15,14 @@
           <h3>{{ props.entity.name }}</h3>
           <h5 v-if="props.entity.isArchived">Archiviert</h5>
           <h5 v-else>Nicht archviert</h5>
-          <!--  <p class="mt-2">
-            {{ description() }}
-          </p> -->
         </div>
         <div width="100%" class="mt-2 action-button">
+          <ActionButton
+            v-if="props.type === 'shop'"
+            button-text="Menükarte"
+            @action="openMenuCardModal()"
+            class="button-width primary-button mr-2"
+          />
           <ActionButton
             button-text="Bearbeiten"
             @action="openEditModal()"
@@ -35,19 +38,33 @@ import { useEntityStore } from "@/data/store/entity/EntityStore";
 import ActionButton from "./ActionButton.vue";
 /*   import moment from "moment";
  */ import { ref, onMounted } from "vue";
+import { useShopStore } from "@/data/store/ShopStore";
 
-const props = defineProps(["entity"]);
+const props = defineProps(["entity", "type"]);
 const imageSrc = ref("");
 
 onMounted(getImageForEntity);
 
 async function getImageForEntity() {
-  imageSrc.value = await useEntityStore().getImageForEntity(props.entity?.id);
+  if (props.type === "entity") {
+    imageSrc.value = await useEntityStore().getImageForEntity(props.entity?.id);
+  } else if (props.type === "shop") {
+    imageSrc.value = await useShopStore().getImageForShop(props.entity.id)
+  }
 }
 
 function openEditModal() {
-  useEntityStore().setSelectedEntityForEdit(props.entity);
-  useEntityStore().triggerEditEntityModuleActive();
+  if (props.type === "entity") {
+    useEntityStore().setSelectedEntityForEdit(props.entity);
+    useEntityStore().triggerEditEntityModuleActive();
+  } else if (props.type === "shop") {
+    useShopStore().setSelectedShopForEdit(props.entity);
+    useShopStore().triggerEditShopModuleActive();
+  }
+}
+
+function openMenuCardModal() {
+  return null;
 }
 </script>
 <style scoped>
@@ -69,7 +86,5 @@ function openEditModal() {
   z-index: 20;
 }
 
-.button-width {
-  width: 80% !important;
-}
+
 </style>

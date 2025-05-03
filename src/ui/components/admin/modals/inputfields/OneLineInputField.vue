@@ -1,6 +1,6 @@
 <template>
   <v-text-field
-    label="Name"
+    :label="props.labelName"
     bg-color="#F6F4F1"
     v-model="modelValue"
     :hide-details="true"
@@ -10,4 +10,5 @@
 </template>
 <script setup lang="ts">
 const modelValue = defineModel<string | undefined>();
+const props = defineProps(["labelName"])
 </script>

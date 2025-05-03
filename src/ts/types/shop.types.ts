@@ -1,5 +1,6 @@
 interface Shop {
   id: number;
+  name: string;
   website: string;
   phoneNumber: string;
   lastUpdated: Date;

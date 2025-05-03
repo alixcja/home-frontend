@@ -6,7 +6,9 @@ export const useShopStore = defineStore({
   id: "storeShop",
   state: () => {
     return {
-        allShops: [] as Shop[],
+      allShops: [] as Shop[],
+      isEditShopModalActive: false,
+      selectedShopForEdit: null as Shop | null,
     };
   },
   getters: {},
@@ -22,6 +24,22 @@ export const useShopStore = defineStore({
             this.setShops(response.data);
           }
         });
+    },
+
+    triggerEditShopModuleActive() {
+      this.isEditShopModalActive = !this.isEditShopModalActive;
+    },
+
+    setSelectedShopForEdit(selected: Shop | null) {
+      this.selectedShopForEdit = selected;
+    },
+
+    async getImageForShop(id: number) {
+      const response = await axiosInstance.get(
+        `${import.meta.env.VITE_BACKEND_URL}/shops/${id}/image`,
+        { responseType: "blob" }
+      );
+      return URL.createObjectURL(response.data);
     },
   },
 });

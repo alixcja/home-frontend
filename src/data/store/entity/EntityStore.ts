@@ -85,10 +85,10 @@ export const useEntityStore = defineStore("entity", {
     },
 
     async persistEntity(
-      name: string, // ✅ Change to 'string'
+      name: string,
       type: BookingEntityType,
-      consoleType?: string, // ✅ Change to 'string'
-      description?: string // ✅ Change to 'string'
+      consoleType?: string,
+      description?: string
     ): Promise<number | null> {
       if (type === BookingEntityType.Game) {
         return this.persistGame(name, description, consoleType);

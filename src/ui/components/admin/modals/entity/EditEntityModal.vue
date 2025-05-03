@@ -18,20 +18,20 @@
         @action="archiveEntity()"
       />
     </div>
-    <NameInputField v-model="name" />
+    <NameInputField v-model="name" label-name="Name"/>
     <ConsoleTypeInputField v-if="typeIsNotConsole()" v-model="consoleType" />
-    <DescriptionInputField v-model="description" />
+    <DescriptionInputField v-model="description" label-name="Description"/>
   </AdminEntityModal>
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useEntityStore } from "@/data/store/entity/EntityStore";
 import { storeToRefs } from "pinia";
-import AdminEntityModal from "./AdminBaseModal.vue";
-import NameInputField from "./inputfields/NameInputField.vue";
-import ConsoleTypeInputField from "./inputfields/ConsoleTypeInputField.vue";
-import DescriptionInputField from "./inputfields/DescriptionInputField.vue";
-import ActionButton from "../ActionButton.vue";
+import AdminEntityModal from "../AdminBaseModal.vue";
+import NameInputField from "../inputfields/OneLineInputField.vue";
+import ConsoleTypeInputField from "../inputfields/ConsoleTypeInputField.vue";
+import DescriptionInputField from "../inputfields/MultiLineInputField.vue";
+import ActionButton from "../../ActionButton.vue";
 
 const { selectedEntityForEdit } = storeToRefs(useEntityStore());
 const name = ref<string | undefined>(selectedEntityForEdit.value?.name);

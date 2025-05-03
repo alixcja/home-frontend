@@ -12,12 +12,12 @@
         v-model="typeString"
       ></TypeInputField>
       <div v-show="type">
-        <NameInputField v-model="name" />
+        <NameInputField v-model="name" label-name="Name" />
         <ConsoleTypeInputField
           v-if="typeIsNotConsole()"
           v-model="consoleType"
         />
-        <DescriptionInputField v-model="description" />
+        <DescriptionInputField v-model="description" label-name="Beschreibung"/>
       </div>
     </div>
   </AdminEntityModal>
@@ -27,11 +27,11 @@ import { computed, onMounted, ref } from "vue";
 import { useEntityStore } from "@/data/store/entity/EntityStore";
 import { storeToRefs } from "pinia";
 import { BookingEntityType } from "@/ts/entitytypes.enums";
-import AdminEntityModal from "../modals/AdminBaseModal.vue";
-import NameInputField from "./inputfields/NameInputField.vue";
-import ConsoleTypeInputField from "./inputfields/ConsoleTypeInputField.vue";
-import TypeInputField from "./inputfields/TypeInputField.vue";
-import DescriptionInputField from "./inputfields/DescriptionInputField.vue";
+import AdminEntityModal from "../AdminBaseModal.vue";
+import NameInputField from "../inputfields/OneLineInputField.vue";
+import ConsoleTypeInputField from "../inputfields/ConsoleTypeInputField.vue";
+import TypeInputField from "../inputfields/TypeInputField.vue";
+import DescriptionInputField from "../inputfields/MultiLineInputField.vue";
 
 const { selectedEntityForEdit } = storeToRefs(useEntityStore());
 const imageSrc = ref<string | undefined>(undefined);
