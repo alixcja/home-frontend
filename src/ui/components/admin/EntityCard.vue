@@ -49,7 +49,7 @@ async function getImageForEntity() {
   if (props.type === "entity") {
     imageSrc.value = await useEntityStore().getImageForEntity(props.entity?.id);
   } else if (props.type === "shop") {
-    imageSrc.value = await useShopStore().getImageForShop(props.entity.id)
+    imageSrc.value = await useShopStore().getImageForShop(props.entity.id);
   }
 }
 
@@ -64,7 +64,8 @@ function openEditModal() {
 }
 
 function openMenuCardModal() {
-  return null;
+  useShopStore().setSelectedShopForMenuCardsEdit(props.entity);
+  useShopStore().triggerEditMenuCardsForShopModuleActive();
 }
 </script>
 <style scoped>
@@ -85,6 +86,4 @@ function openMenuCardModal() {
   justify-content: end;
   z-index: 20;
 }
-
-
 </style>

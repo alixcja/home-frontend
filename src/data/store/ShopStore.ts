@@ -8,6 +8,8 @@ export const useShopStore = defineStore({
     return {
       allShops: [] as Shop[],
       isEditShopModalActive: false,
+      isMenuCardModalActive: false,
+      selectedShopForMenuCardsEditing: null as Shop | null,
       selectedShopForEdit: null as Shop | null,
     };
   },
@@ -34,12 +36,30 @@ export const useShopStore = defineStore({
       this.selectedShopForEdit = selected;
     },
 
+    triggerEditMenuCardsForShopModuleActive() {
+      this.isMenuCardModalActive = !this.isMenuCardModalActive;
+    },
+
+    setSelectedShopForMenuCardsEdit(selected: Shop | null) {
+      this.selectedShopForMenuCardsEditing = selected;
+    },
+
     async getImageForShop(id: number) {
       const response = await axiosInstance.get(
         `${import.meta.env.VITE_BACKEND_URL}/shops/${id}/image`,
         { responseType: "blob" }
       );
       return URL.createObjectURL(response.data);
+    },
+
+    async getMenuCardsForShop(id: number) {
+      const response = await axiosInstance.get(
+        `${import.meta.env.VITE_BACKEND_URL}/shops/${id}/menucards`,
+        { responseType: "blob" }
+      );
+      return response.data.array.forEach((card: Blob | MediaSource) => {
+        return URL.createObjectURL(card);
+      });
     },
   },
 });

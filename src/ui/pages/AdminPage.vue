@@ -8,6 +8,9 @@
   <v-dialog v-model="isEditShopModalActive" class="adminDialog">
     <EditShopModal />
   </v-dialog>
+  <v-dialog v-model="isMenuCardModalActive" class="adminDialog">
+    <MenuCardsModal :entity="selectedShopForMenuCardsEditing"/>
+  </v-dialog>
   <div class="ma-6">
     <div class="d-flex flex-row mb-4">
       <h1 class="header">Admin</h1>
@@ -38,6 +41,7 @@ import EntityTab from "../components/admin/EntityTab.vue";
 import EntityCard from "@/ui/components/admin/EntityCard.vue";
 import { useShopStore } from "@/data/store/ShopStore";
 import EditShopModal from "../components/admin/modals/shop/EditShopModal.vue";
+import MenuCardsModal from "../components/admin/modals/shop/MenuCardsModal.vue";
 
 const { allEntities } = storeToRefs(useEntityStore());
 const { allShops } = storeToRefs(useShopStore());
@@ -45,7 +49,7 @@ const { allShops } = storeToRefs(useShopStore());
 const { isEditEntityModuleActive, isAddEntityModuleActive } =
   storeToRefs(useEntityStore());
 
-const { isEditShopModalActive } = storeToRefs(useShopStore())
+const { isEditShopModalActive, isMenuCardModalActive, selectedShopForMenuCardsEditing } = storeToRefs(useShopStore())
 
 const currentSelected = ref("entities");
 
