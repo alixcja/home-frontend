@@ -2,8 +2,8 @@
   <AdminEntityModal
     :title="selectedShopForEdit?.name + ' bearbeiten'"
     confirm-button-title="Bestätigen"
-    @confirm="persistShop()"
-    @cancel="closeEdithShopModal()"
+    @confirm="updateShop()"
+    @cancel="closeEditShopModal()"
     v-model="selectedFile"
   >
     <div class="d-flex justify-end pb-2">
@@ -49,7 +49,7 @@ import { ref } from "vue";
 const { selectedShopForEdit } = storeToRefs(useShopStore());
 
 const selectedFile = ref<File | null>(null);
-const name = ref<string | undefined>(selectedShopForEdit.value?.name);
+const name = ref<string>(selectedShopForEdit.value!.name);
 const website = ref<string | undefined>(selectedShopForEdit.value?.website);
 const phoneNumber = ref<string | undefined>(
   selectedShopForEdit.value?.phoneNumber
@@ -65,9 +65,25 @@ const postalCode = ref<number | undefined>(
 );
 const city = ref<string | undefined>(selectedShopForEdit.value?.address.city);
 
-async function persistShop() {}
+async function updateShop() {
+  useShopStore().updateShop(
+    selectedShopForEdit.value?.id!,
+    name.value!,
+    website.value,
+    phoneNumber.value,
+    streetName.value,
+    streetNumber.value,
+    postalCode.value,
+    city.value
+  );
+  if (selectedFile.value && selectedShopForEdit.value?.id!) {
+    await useShopStore().uploadImageForShop(selectedShopForEdit.value?.id!, selectedFile.value);
+  }
+  closeEditShopModal();
+  useShopStore().getAllShops();
+}
 
-function closeEdithShopModal() {
+function closeEditShopModal() {
   useShopStore().triggerEditShopModuleActive();
   selectedShopForEdit.value = null;
 }

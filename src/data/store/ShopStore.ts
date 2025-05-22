@@ -90,7 +90,40 @@ export const useShopStore = defineStore({
           );
           return response.data();
         });
-        return null;
+      return null;
+    },
+
+    async updateShop(
+      id: number,
+      name: string,
+      website?: string,
+      phoneNumber?: string,
+      streetName?: string,
+      streetNumber?: string,
+      postalCode?: number,
+      city?: string
+    ) {
+      const address = {
+        streetNumber,
+        streetName,
+        postalCode,
+        city,
+      } as Address;
+
+      const shop: Partial<Shop> = {
+        name,
+        website,
+        phoneNumber,
+        address,
+      };
+      const response: AxiosResponse<Shop> = await axiosInstance.put(
+        `${import.meta.env.VITE_BACKEND_URL}/shops/${id}`,
+        shop
+      );
+      useToast().success(
+        `Shop ${response.data.name} wurde erfolgreich erstellt`
+      );
+      return response.data.id;
     },
 
     async persistMenuCardForShop(number: number, menuCard: File, id?: number) {
