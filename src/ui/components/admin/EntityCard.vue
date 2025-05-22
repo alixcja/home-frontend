@@ -1,34 +1,27 @@
 <template>
-  <v-card class="card elevation-24 rounded-xl">
-    <div class="d-flex flex-row">
-      <div class="w-33">
-        <v-img
-          :src="imageSrc"
-          :cover="true"
-          aspect-ratio="1"
-          height="100%"
-          width="100%"
-        ></v-img>
+  <v-card class="card elevation-24 rounded-xl d-flex flex-row">
+    <div class="square-img-container">
+      <v-img :src="imageSrc" cover height="100%" width="100%" />
+    </div>
+
+    <div class="d-flex flex-column justify-space-between pa-4" style="flex: 1; min-width: 0;">
+      <div>
+        <h3 class="text-no-wrap">{{ props.entity.name }}</h3>
+        <h5 v-if="props.entity.isArchived">Archiviert</h5>
+        <h5 v-else>Nicht archiviert</h5>
       </div>
-      <div class="d-flex flex-column">
-        <div class="ma-4">
-          <h3>{{ props.entity.name }}</h3>
-          <h5 v-if="props.entity.isArchived">Archiviert</h5>
-          <h5 v-else>Nicht archviert</h5>
-        </div>
-        <div width="100%" class="mt-2 action-button">
-          <ActionButton
-            v-if="props.type === 'shop'"
-            button-text="Menükarte"
-            @action="openMenuCardModal()"
-            class="button-width primary-button mr-2"
-          />
-          <ActionButton
-            button-text="Bearbeiten"
-            @action="openEditModal()"
-            class="button-width primary-button"
-          />
-        </div>
+
+      <div class="d-flex justify-end">
+        <ActionButton
+          v-if="props.type === 'shop'"
+          button-text="Menükarte"
+          @action="openMenuCardModal()"
+          class="mr-2"
+        />
+        <ActionButton
+          button-text="Bearbeiten"
+          @action="openEditModal()"
+        />
       </div>
     </div>
   </v-card>
@@ -36,8 +29,8 @@
 <script lang="ts" setup>
 import { useEntityStore } from "@/data/store/entity/EntityStore";
 import ActionButton from "./ActionButton.vue";
-/*   import moment from "moment";
- */ import { ref, onMounted } from "vue";
+// import moment from "moment";
+import { ref, onMounted } from "vue";
 import { useShopStore } from "@/data/store/ShopStore";
 
 const props = defineProps(["entity", "type"]);
@@ -85,5 +78,11 @@ function openMenuCardModal() {
   display: flex;
   justify-content: end;
   z-index: 20;
+}
+
+.square-img-container {
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
 }
 </style>

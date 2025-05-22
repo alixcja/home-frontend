@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="primary-button add-button" @click="$emit('action')">{{
+  <v-btn size="small" class="primary-button" @click="$emit('action')">{{
     props.buttonText
   }}</v-btn>
 </template>

@@ -1,10 +1,10 @@
 <template>
   <div class="d-flex flex-row">
-    <v-btn @click="$emit('confirm')" class="book-button">
+    <v-btn size="small" @click="$emit('confirm')" class="book-button">
       {{ props.confirmButtonTitle }}</v-btn
     >
     <v-spacer />
-    <v-btn class="cancel-button" variant="outlined" @click="$emit('cancel')">
+    <v-btn size="small" class="cancel-button" variant="outlined" @click="$emit('cancel')">
       {{ props.cancelButtonTitle || "Abbrechen" }}</v-btn
     >
   </div>
