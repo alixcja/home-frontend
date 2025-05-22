@@ -1,6 +1,5 @@
 <template>
   <div class="splitter">
-    <v-icon :icon="iconType" class="mr-2" @click="toggleShopList"></v-icon>
     <p class="text-h5 splitter-title">Alle Restaurants</p>
     <hr class="w-100 splitter-line" />
   </div>
@@ -15,21 +14,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import EntityCard from "../base/entitycard/EntityCard.vue";
 import { useShopStore } from "@/data/store/ShopStore";
 import { storeToRefs } from "pinia";
 
 const isToggled = ref(false);
 const { allShops } = storeToRefs(useShopStore());
-
-const iconType = computed(() =>
-  isToggled.value ? "mdi-chevron-up" : "mdi-chevron-down"
-);
-
-function toggleShopList() {
-  isToggled.value = !isToggled.value;
-}
 
 function redirectToDetailsPage() {
   isToggled.value = !isToggled.value;
