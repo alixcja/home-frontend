@@ -5,9 +5,15 @@
 </template>
 <script lang="ts" setup>
 import { useEntityStore } from "@/data/store/entity/EntityStore";
+import { useShopStore } from "@/data/store/ShopStore";
+const props = defineProps({type: String})
 
 function toggleAddEntityModal() {
-  useEntityStore().triggerAddEntityModuleActive();
+  if (props.type === "entities") {
+    useEntityStore().triggerAddEntityModuleActive();
+  } else {
+    useShopStore().triggerAddShopModuleActive();
+  }
 }
 </script>
 <style scoped>

@@ -121,4 +121,3 @@ onMounted(() => {
   align-self: center;
 }
 </style>
-@/ts/entity.types

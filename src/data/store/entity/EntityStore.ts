@@ -65,7 +65,6 @@ export const useEntityStore = defineStore("entity", {
     },
     async uploadImageForEntity(id: number, image: File) {
       const formData = new FormData();
-
       formData.append("file", image);
 
       await axiosInstance.put(

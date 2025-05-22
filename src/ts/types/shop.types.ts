@@ -5,6 +5,7 @@ interface Shop {
   phoneNumber: string;
   lastUpdated: Date;
   isArchived: boolean;
+  menuCardCount: number;
   address: Address;
 }
 
@@ -34,4 +35,4 @@ interface Address {
 }
 
 export { Weekday };
-export type { Shop, OpeningHours };
+export type { Shop, OpeningHours, Address };

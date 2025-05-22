@@ -3,9 +3,43 @@
     <div class="d-flex flex-column">
       <p class="title">Menükarten für {{ props.entity.name }}</p>
       <hr class="divider" />
-      <div class="d-flex flex-row mx-4">
-        <!-- <div class="d-flex flex-row w-100">
-           <v-img class="mb-3" aspect-ratio="1" :src="imageSrc"></v-img>
+      <div class="d-flex flex-row mx-4 overflow-auto">
+        <draggable
+          v-model="selectedNewMenuCards"
+          item-key="id"
+          class="d-flex flex-row"
+          :animation="200"
+          tag="div"
+        >
+          <template #item="{ element, index }">
+            <div class="card-wrapper">
+              <v-btn
+                icon
+                size="x-small"
+                color="red"
+                class="remove-image-button d-flex"
+                @click.stop="removeImage(index)"
+              >
+                <v-icon size="14">mdi-close</v-icon>
+              </v-btn>
+              <v-card
+                width="120"
+                :flat="true"
+                class="text-center ma-2"
+                color="#1e1c1b"
+                style="cursor: grab"
+              >
+                <v-img
+                  :src="imageUrls[element.id]"
+                  height="120"
+                  cover
+                ></v-img>
+                <p>Seite {{ index + 1 }}</p>
+              </v-card>
+            </div>
+          </template>
+        </draggable>
+        <div class="d-flex flex-row w-100">
           <input
             type="file"
             ref="fileInput"
@@ -13,13 +47,17 @@
             @change="handleFileSelect"
             accept="image/*"
           />
-
           <div class="d-flex fill-width flex-column align-center">
-            <v-card class="add-new-menucard" @click="openFileExplorer()">
+            <v-card
+              class="add-new-menucard ma-2"
+              @click="openFileExplorer()"
+              width="120"
+              height="120"
+            >
               <v-icon color="white">mdi-plus</v-icon>
             </v-card>
           </div>
-        </div> -->
+        </div>
       </div>
       <hr class="divider" />
       <ActionButtons
@@ -37,32 +75,57 @@ import { useShopStore } from "@/data/store/ShopStore";
 import ActionButtons from "@/ui/components/base/modal/ActionButtons.vue";
 import { storeToRefs } from "pinia";
 import { ref, onMounted } from "vue";
+import draggable from "vuedraggable";
 
 const props = defineProps(["entity"]);
 
 const { selectedShopForMenuCardsEditing } = storeToRefs(useShopStore());
 const selectedNewMenuCards = ref<(string | null)[]>([]);
-const allMenuCards = ref();
 const fileInput = ref<HTMLInputElement | null>(null);
-const modelValue = defineModel<File | null>();
+const imageUrls = ref<(string | null)[]>([]);
 
 onMounted(() => {
   getMenucardsForShops();
 });
 
 async function getMenucardsForShops() {
-  if (selectedShopForMenuCardsEditing.value?.id) {
-    allMenuCards.value = await useShopStore().getMenuCardsForShop(
-      selectedShopForMenuCardsEditing.value.id
-    );
-  } else {
-    allMenuCards.value = await useEntityStore().getDefaultImage();
+  if (
+    selectedShopForMenuCardsEditing.value?.id &&
+    selectedShopForMenuCardsEditing.value.menuCardCount > 0
+  ) {
+    for (
+      let i = 1;
+      i <= selectedShopForMenuCardsEditing.value.menuCardCount;
+      i++
+    ) {
+      const image = await useShopStore().getMenuCardByShopAndNumber(
+        selectedShopForMenuCardsEditing.value.id,
+        i
+      );
+      selectedNewMenuCards.value.push(image);
+    }
   }
+  debugger
+  loadImageUrls();
 }
 
-async function removeImage() {
-  modelValue.value = null;
-  selectedNewMenuCards.value = [];
+async function removeImage(index: number) {
+  selectedNewMenuCards.value.splice(index, 1);
+}
+
+async function fetchImageAsBlob(url: string) {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  return URL.createObjectURL(blob);
+}
+
+async function loadImageUrls() {
+  debugger
+  for (const card of selectedNewMenuCards.value) {
+    if (card?.id != null && !imageUrls.value[card.id]) {
+      imageUrls[card.id].value = await fetchImageAsBlob(card.imageUrl);
+    }
+  }
 }
 
 const openFileExplorer = () => {
@@ -74,12 +137,17 @@ const handleFileSelect = (event: Event) => {
   const file = target.files?.[0];
 
   if (file) {
-    modelValue.value = file;
     selectedNewMenuCards.value.push(URL.createObjectURL(file));
   }
+  target.value = "";
 };
 
-function persistMenuCards() {}
+function persistMenuCards() {
+  selectedNewMenuCards.value.forEach((menuCard) => {
+    const number = selectedNewMenuCards.value.indexOf(menuCard) + 1;
+    useShopStore().persistMenuCardForShop(number, menuCard);
+  });
+}
 
 function cancel() {
   useShopStore().triggerEditMenuCardsForShopModuleActive();
@@ -118,11 +186,30 @@ function cancel() {
 }
 
 .add-new-menucard {
-  width: 15vw !important;
-  height: 15vh !important;
   background-color: #5b5552 !important;
   justify-content: center;
   align-items: center;
   display: flex;
+}
+
+.icon-position {
+  justify-content: end;
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  z-index: 10;
+}
+
+.card-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.remove-image-button {
+  position: absolute;
+  z-index: 30;
+  right: -5px;
+  top: -2px;
+  background-color: white;
 }
 </style>
