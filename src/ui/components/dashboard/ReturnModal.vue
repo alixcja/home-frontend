@@ -20,10 +20,12 @@ const { bookingToReturn } = storeToRefs(useBookingStore());
 function toggleReturnBookingModule() {
   bookingStore.triggerReturnBookingModule();
   bookingToReturn.value = null;
+  bookingStore.fetchAllBookings()
 }
 
-function returnBooking() {
-  bookingStore.returnBooking();
+async function returnBooking() {
+  await bookingStore.returnBooking();
+  toggleReturnBookingModule();
 }
 </script>
 <style scoped>

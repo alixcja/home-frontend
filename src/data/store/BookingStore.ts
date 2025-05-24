@@ -183,7 +183,7 @@ export const useBookingStore = defineStore("booking", {
       if (this.bookingToReturn) {
         axiosInstance
           .put(
-            `${import.meta.env.VITE_BACKEND_URL}/bookings/return/${this.bookingToReturn.id}`
+            `${import.meta.env.VITE_BACKEND_URL}/bookings/${this.bookingToReturn.id}/return`
           )
           .then(() => {
             const toast = useToast();
@@ -195,7 +195,7 @@ export const useBookingStore = defineStore("booking", {
     cancelBooking() {
       axiosInstance
         .put(
-          `${import.meta.env.VITE_BACKEND_URL}/bookings/cancel/${this.bookingToCancel.id}`
+          `${import.meta.env.VITE_BACKEND_URL}/bookings/${this.bookingToCancel.id}/cancel`
         )
         .then(() => {
           const toast = useToast();
