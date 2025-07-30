@@ -50,12 +50,15 @@ export const useEntityStore = defineStore("entity", {
         });
     },
     async getImageForEntity(id: number) {
+      
       const response = await axiosInstance.get(
         `${import.meta.env.VITE_BACKEND_URL}/entities/${id}/image`,
         { responseType: "blob" }
       );
+
       return URL.createObjectURL(response.data);
     },
+
     async getDefaultImage() {
       const response = await axiosInstance.get(
         `${import.meta.env.VITE_BACKEND_URL}/entities/image/default`,
@@ -63,6 +66,7 @@ export const useEntityStore = defineStore("entity", {
       );
       return URL.createObjectURL(response.data);
     },
+
     async uploadImageForEntity(id: number, image: File) {
       const formData = new FormData();
       formData.append("file", image);

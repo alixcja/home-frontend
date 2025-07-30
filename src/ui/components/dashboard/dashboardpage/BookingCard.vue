@@ -61,7 +61,6 @@ function openReturnModal() {
 
 
 function openCancelModal() {
-  console.log(props.booking)
   useBookingStore().setBookingToCancel(props.booking);
   bookingStore.triggerCancelBookingModal();
 }

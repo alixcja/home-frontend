@@ -54,9 +54,10 @@ const modelValue = defineModel<File | null>();
 
 async function getImageForEntity() {
   if (selectedEntityForEdit.value?.id) {
-    imageSrc.value = await useEntityStore().getImageForEntity(
+    const img = await useEntityStore().getImageForEntity(
       selectedEntityForEdit.value.id
     );
+    imageSrc.value = img;
   } else {
     imageSrc.value = await useEntityStore().getDefaultImage();
   }

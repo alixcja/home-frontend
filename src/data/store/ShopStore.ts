@@ -56,7 +56,19 @@ export const useShopStore = defineStore({
         `${import.meta.env.VITE_BACKEND_URL}/shops/${id}/menucards/${number}`,
         { responseType: "blob" }
       );
-      return URL.createObjectURL(response.data);
+
+      const blob = response.data;
+      const imageSrc = URL.createObjectURL(blob); // URL string for preview
+
+      const filename = "menu_card_${number}.jpg";
+      const file = new File([blob], filename, { type: "image/jpeg" });
+
+      const menuCard: MenuCard = {
+        number,
+        file,
+        imageSrc,
+      };
+      return menuCard;
     },
 
     async persistShop(
@@ -126,16 +138,21 @@ export const useShopStore = defineStore({
       return response.data.id;
     },
 
-    async persistMenuCardForShop(number: number, menuCard: File, id?: number) {
+    async persistMenuCardForShop(number: number, menuCard: File) {
       const formData = new FormData();
       formData.append("file", menuCard);
       formData.append("number", number as unknown as string);
-      formData.append("id", id as unknown as string);
 
-      await axiosInstance.post(
+      await axiosInstance.put(
         `${import.meta.env.VITE_BACKEND_URL}/shops/${this.selectedShopForMenuCardsEditing?.id}/menucards`,
         formData,
         { responseType: "blob" }
+      );
+    },
+
+    async deleteAllMenuCardsForShop() {
+      await axiosInstance.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/shops/${this.selectedShopForMenuCardsEditing?.id}/menucards`
       );
     },
 
@@ -144,6 +161,7 @@ export const useShopStore = defineStore({
         `${import.meta.env.VITE_BACKEND_URL}/shops/${id}/image`,
         { responseType: "blob" }
       );
+      const text = await response.data.text();
       return URL.createObjectURL(response.data);
     },
 

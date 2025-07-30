@@ -55,15 +55,15 @@ const phoneNumber = ref<string | undefined>(
   selectedShopForEdit.value?.phoneNumber
 );
 const streetName = ref<string | undefined>(
-  selectedShopForEdit.value?.address.streetName
+  selectedShopForEdit.value?.address?.streetName
 );
 const streetNumber = ref<string | undefined>(
-  selectedShopForEdit.value?.address.streetNumber
+  selectedShopForEdit.value?.address?.streetNumber
 );
 const postalCode = ref<number | undefined>(
-  selectedShopForEdit.value?.address.postalCode
+  selectedShopForEdit.value?.address?.postalCode
 );
-const city = ref<string | undefined>(selectedShopForEdit.value?.address.city);
+const city = ref<string | undefined>(selectedShopForEdit.value?.address?.city);
 
 async function updateShop() {
   useShopStore().updateShop(
@@ -77,7 +77,7 @@ async function updateShop() {
     city.value
   );
   if (selectedFile.value && selectedShopForEdit.value?.id!) {
-    await useShopStore().uploadImageForShop(selectedShopForEdit.value?.id!, selectedFile.value);
+      await useShopStore().uploadImageForShop(selectedShopForEdit.value?.id!, selectedFile.value);
   }
   closeEditShopModal();
   useShopStore().getAllShops();
