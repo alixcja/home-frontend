@@ -9,7 +9,7 @@ import "@mdi/font/css/materialdesignicons.css";
 import { createPinia } from "pinia";
 import router from "@/router/index.ts";
 import keycloakService from "@/services/keycloakService";
-import Toast, { PluginOptions, POSITION } from "vue-toastification";
+import Toast, { POSITION } from "vue-toastification";
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
 

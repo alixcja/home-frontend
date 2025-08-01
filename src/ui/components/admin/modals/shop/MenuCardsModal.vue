@@ -6,23 +6,26 @@
 
       <div class="d-flex flex-row mx-4 overflow-auto">
         <div class="d-flex flex-row gap-4 flex-wrap">
-          <div
-            v-for="(card, index) in menuCards"
-            :key="index"
-            class="d-flex flex-column image-preview card-wrapper"
-          >
-            <v-img
-              :width="300"
-              :height="300"
-              class="mb-3"
-              aspect-ratio="1"
-              :src="card.imageSrc"
-            />
-            <v-btn icon class="remove-image-button" @click="removeImage(index)">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </div>
-
+          <draggable v-model="menuCards" item-key="number">
+            <template #item="{ element, index }">
+              <div class="drag-card" style="position: relative; cursor: move">
+                <v-img
+                  :width="300"
+                  :height="300"
+                  class="mb-3"
+                  aspect-ratio="1"
+                  :src="element.imageSrc"
+                />
+                <v-btn
+                  icon
+                  class="remove-image-button"
+                  @click="removeImage(index)"
+                >
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </div>
+            </template>
+          </draggable>
           <div class="d-flex flex-row w-100">
             <input
               type="file"
@@ -47,8 +50,6 @@
       </div>
 
       <hr class="divider" />
-
-      <!-- Save/Cancel buttons -->
       <ActionButtons
         confirm-button-title="Speichern"
         @confirm="persistMenuCards"
@@ -64,11 +65,11 @@ import { useShopStore } from "@/data/store/ShopStore";
 import ActionButtons from "@/ui/components/base/modal/ActionButtons.vue";
 import { storeToRefs } from "pinia";
 import { ref, onMounted, watchEffect } from "vue";
+import draggable from "vuedraggable";
 const { selectedShopForMenuCardsEditing } = storeToRefs(useShopStore());
 
 const fileInput = ref<HTMLInputElement | null>(null);
 const menuCards = ref<MenuCard[]>([]);
-
 const props = defineProps(["entity"]);
 
 onMounted(() => {
@@ -85,7 +86,6 @@ async function loadExistingMenuCards() {
     const blobUrl = await useShopStore().getMenuCardByShopAndNumber(shop.id, i);
     menuCards.value.push(blobUrl);
   }
-  console.log(menuCards.value);
 }
 
 function openFileExplorer() {
@@ -108,7 +108,6 @@ function handleFileSelect(event: Event) {
       menuCards.value.push(newMenuCard);
     }
   }
-  console.log("Updated menuCards: " + menuCards.value);
   target.value = "";
 }
 
@@ -128,7 +127,6 @@ async function persistMenuCards() {
 
 function removeImage(index: number) {
   menuCards.value.splice(index, 1);
-  console.log("Deleted: " + menuCards.value);
 }
 
 function cancel() {
@@ -189,9 +187,9 @@ function cancel() {
 
 .remove-image-button {
   position: absolute;
+  top: 8px;
+  right: -25px;
   z-index: 30;
-  right: -5px;
-  top: -2px;
   background-color: white;
 }
 
