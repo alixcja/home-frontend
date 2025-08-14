@@ -1,7 +1,7 @@
 <template>
   <v-card class="card elevation-24 rounded-xl">
-    <div class="d-flex flex-row">
-      <v-img :cover="true" width="40%" aspect-ratio="1" :src="imageSrc"></v-img>
+    <div class="d-flex flex-row h-100">
+      <v-img :src="imageSrc" cover class="square-image" />
       <div class="d-flex flex-column">
         <div class="ma-4">
           <h3>{{ props.booking.bookingEntity.name }}</h3>
@@ -58,7 +58,6 @@ function openReturnModal() {
   useBookingStore().setBookingToReturn(props.booking);
   bookingStore.triggerReturnBookingModule();
 }
-
 
 function openCancelModal() {
   useBookingStore().setBookingToCancel(props.booking);
@@ -121,5 +120,12 @@ function getEntityType(): string {
 
 .button-width {
   width: 100% !important;
+}
+
+.square-image {
+    height: 100%;
+  flex: 0 0 42%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 </style>
