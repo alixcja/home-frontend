@@ -38,12 +38,11 @@ onMounted(getImageForEntity);
 async function getImageForEntity() {
   imageSrc.value = await useEntityStore().getImageForEntity(props.entity?.id);
 }
+
 const isSelected = computed(() => {
-  if (!!props.selectedEntities) {
-    props.selectedEntities.some(
-      (entity: BookingEntity) => entity.id === props.entity.id
-    );
-  }
+  return props.selectedEntities?.some(
+    (entity: BookingEntity) => entity.id === props.entity.id
+  ) ?? false;
 });
 
 const entityIsABookingEntity = computed(() => !!props.entity?.type);
