@@ -27,7 +27,7 @@ export const useEntityStore = defineStore("entity", {
     },
     getAllGames() {
       axiosInstance
-        .get(`${import.meta.env.VITE_BACKEND_URL}/games`)
+        .get(`${import.meta.env.VITE_BACKEND_URL}/games?status=unarchived`)
         .then((response) => {
           this.allGames = response.data;
           this.allEntities.push(...response.data);
@@ -35,7 +35,7 @@ export const useEntityStore = defineStore("entity", {
     },
     getAllConsoles() {
       axiosInstance
-        .get(`${import.meta.env.VITE_BACKEND_URL}/consoles`)
+        .get(`${import.meta.env.VITE_BACKEND_URL}/consoles?status=unarchived`)
         .then((response) => {
           this.allConsoles = response.data;
           this.allEntities.push(...response.data);
@@ -43,14 +43,13 @@ export const useEntityStore = defineStore("entity", {
     },
     getAllAccessories() {
       axiosInstance
-        .get(`${import.meta.env.VITE_BACKEND_URL}/accessories`)
+        .get(`${import.meta.env.VITE_BACKEND_URL}/accessories?status=unarchived`)
         .then((response) => {
           this.allAccessories = response.data;
           this.allEntities.push(...response.data);
         });
     },
     async getImageForEntity(id: number) {
-      
       const response = await axiosInstance.get(
         `${import.meta.env.VITE_BACKEND_URL}/entities/${id}/image`,
         { responseType: "blob" }
