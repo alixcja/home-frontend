@@ -20,5 +20,8 @@ COPY . .
 # build app for production with minification
 RUN pnpm run build:no-tsc
 
+COPY docker-entrypoint.sh /app/
+RUN chmod +x /app/docker-entrypoint.sh
+
 EXPOSE 8080
-CMD ["http-server", "dist", "-p", "8080", "-a", "0.0.0.0"]
+CMD ["/app/docker-entrypoint.sh"]
