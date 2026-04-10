@@ -4,7 +4,7 @@ set -e
 # Der Pfad muss dort sein, wo dein Webserver die Dateien ausliefert!
 # Wenn du 'http-server dist' nutzt, ist es: dist/config.js
 # Wenn du Nginx nutzt, ist es meist: /usr/share/nginx/html/config.js
-CONFIG_FILE="public/config.js"
+CONFIG_FILE="/app/dist/config.js"
 
 echo "Writing runtime configuration to $CONFIG_FILE..."
 

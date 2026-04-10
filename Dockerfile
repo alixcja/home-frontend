@@ -20,8 +20,11 @@ COPY . .
 # build app for production with minification
 RUN pnpm run build:no-tsc
 
-COPY docker-entrypoint.sh /app/
-RUN chmod +x /app/docker-entrypoint.sh
+# Kopiere das Skript nach /app (WORKDIR ist /app)
+COPY docker-entrypoint.sh ./
+RUN chmod +x ./docker-entrypoint.sh
 
 EXPOSE 8080
-CMD ["/app/docker-entrypoint.sh"]
+
+# Das Skript wird ausgeführt und startet am Ende den Server
+CMD ["./docker-entrypoint.sh"]
