@@ -1,30 +1,23 @@
-FROM node:lts-alpine
+# Stage 1: Build-Prozess (Node.js)
+FROM node:lts-alpine AS builder
 
-# install simple http server for serving static content
-RUN npm install -g http-server
-
-# make the 'app' folder the current working directory
 WORKDIR /app
 
 RUN npm install -g pnpm@latest-10
 
-# copy both 'package.json' and 'package-lock.json' (if available)
 COPY package*.json ./
-
-# install project dependencies
 RUN pnpm install
 
-# copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
-
-# build app for production with minification
 RUN pnpm run build:no-tsc
 
-# Kopiere das Skript nach /app (WORKDIR ist /app)
-COPY docker-entrypoint.sh ./
-RUN chmod +x ./docker-entrypoint.sh
+FROM nginx:alpine
+
+COPY --from=builder /app/dist /app/dist
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 8080
 
-# Das Skript wird ausgeführt und startet am Ende den Server
-CMD ["./docker-entrypoint.sh"]
+# Nginx im Vordergrund starten
+CMD ["nginx", "-g", "daemon off;"]
