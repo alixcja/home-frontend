@@ -19,10 +19,8 @@ export const useNewsStore = defineStore({
       axiosInstance
         .get(`${import.meta.env.VITE_BACKEND_URL}/news`)
         .then((response) => {
-          if (response.data.length > 0) {
-            this.setNews(response.data);
-            this.hasNews = true;
-          }
+          this.setNews(response.data);
+          this.hasNews = response.data.length > 0;
         });
     },
   },

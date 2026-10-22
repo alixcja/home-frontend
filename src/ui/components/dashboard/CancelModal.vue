@@ -11,21 +11,27 @@
 </template>
 <script lang="ts" setup>
 import { useBookingStore } from "../../../data/store/BookingStore";
+import { useNewsStore } from "../../../data/store/NewsStore";
 import { storeToRefs } from "pinia";
 import BaseModal from "@/ui/components/base/modal/BaseModal.vue";
 
 const bookingStore = useBookingStore();
+const newsStore = useNewsStore();
 const { bookingToCancel } = storeToRefs(useBookingStore());
 
-function triggerCancelBookingModal() {
+async function triggerCancelBookingModal() {
   bookingStore.triggerCancelBookingModal();
   bookingToCancel.value = null;
+  await bookingStore.fetchAllBookings();
+  newsStore.getAllNews();
 }
 
-function cancelBooking() {
-  bookingStore.cancelBooking();
+async function cancelBooking() {
+  await bookingStore.cancelBooking();
   bookingStore.triggerCancelBookingModal();
   bookingToCancel.value = null; 
+  await bookingStore.fetchAllBookings()
+  newsStore.getAllNews();
 }
 </script>
 <style scoped>

@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axiosInstance from "../api/axios";
 import { useToast } from "vue-toastification";
-import { Axios, AxiosError } from "axios";
+import { AxiosError } from "axios";
 
 export const useBookingStore = defineStore("booking", {
   state: () => ({
@@ -44,34 +44,31 @@ export const useBookingStore = defineStore("booking", {
     },
 
     setBookingToCancel(booking: Booking) {
-      console.log(booking);
       this.bookingToCancel = booking;
     },
 
-    fetchAllBookings() {
+    async fetchAllBookings() {
       this.fetchAllCurrentBookings();
       this.fetchAllOverdueBookings();
     },
 
-    fetchAllCurrentBookings() {
+    async fetchAllCurrentBookings() {
       axiosInstance
         .get(`${import.meta.env.VITE_BACKEND_URL}/bookings?status=upcoming`)
         .then((response) => {
-          if (response.data.length > 0) {
-            this.setCurrentBookings(response.data);
-            this.hasCurrentOrFutureBookings = true;
-          }
+            const bookings = Array.isArray(response.data) ? response.data : [];
+            this.setCurrentBookings(bookings);
+            this.hasCurrentOrFutureBookings = bookings.length > 0;
         });
     },
 
-    fetchAllOverdueBookings() {
+    async fetchAllOverdueBookings() {
       axiosInstance
         .get(`${import.meta.env.VITE_BACKEND_URL}/bookings?status=overdue`)
         .then((response) => {
-          if (response.data.length > 0) {
-            this.setOverdueBookings(response.data);
-            this.hasBookingsOverdue = true;
-          }
+          const bookings = Array.isArray(response.data) ? response.data : [];
+          this.setOverdueBookings(bookings);
+          this.hasBookingsOverdue = bookings.length > 0;
         });
     },
 
@@ -93,6 +90,7 @@ export const useBookingStore = defineStore("booking", {
             const toast = useToast();
             this.triggerBookingModule();
             toast.success("Buchung war erfolgreich");
+            this.selectedEntitiesForBooking.length = 0;
           })
           .catch((error: AxiosError) => {
             this.throwBookingErrorToast(error);
@@ -179,11 +177,11 @@ export const useBookingStore = defineStore("booking", {
       return bookings;
     },
 
-    returnBooking() {
+    async returnBooking() {
       if (this.bookingToReturn) {
-        axiosInstance
+        await axiosInstance
           .put(
-            `${import.meta.env.VITE_BACKEND_URL}/bookings/${this.bookingToReturn.id}/return`
+            `${import.meta.env.VITE_BACKEND_URL}/bookings/${this.bookingToReturn.id}/return`,
           )
           .then(() => {
             const toast = useToast();
@@ -192,15 +190,17 @@ export const useBookingStore = defineStore("booking", {
       }
     },
 
-    cancelBooking() {
-      axiosInstance
-        .put(
-          `${import.meta.env.VITE_BACKEND_URL}/bookings/${this.bookingToCancel.id}/cancel`
-        )
-        .then(() => {
-          const toast = useToast();
-          toast.success("Buchung wurde erfolgreich storniert");
-        });
+    async cancelBooking() {
+      if (this.bookingToCancel) {
+        await axiosInstance
+          .put(
+            `${import.meta.env.VITE_BACKEND_URL}/bookings/${this.bookingToCancel.id}/cancel`,
+          )
+          .then(() => {
+            const toast = useToast();
+            toast.success("Buchung wurde erfolgreich storniert");
+          });
+      }
     },
   },
 });
